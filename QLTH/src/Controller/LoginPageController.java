@@ -19,22 +19,12 @@ import javax.swing.JOptionPane;
  * @author toanc
  */
 public class LoginPageController {
-    private LoginPageView view ;
     
-    public LoginPageController(LoginPageView view) {
-        this.view = view ;
-        view.setVisible(true);
-        this.SubmitLoginPage();
+    public LoginPageController() {
+
     }
     
-    public void SubmitLoginPage() {
-        view.sb1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-             // TODO add your handling code here:
-        String name = view.input_user.getText();
-        String pass = view.input_pass.getText();
-        
+    public void SubmitLoginPage(String name,String pass) {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn= (Connection) DriverManager.getConnection("jdbc:mysql://localhost/qlth","root","team6oop");
@@ -58,17 +48,10 @@ public class LoginPageController {
         catch(Exception ex){
             JOptionPane.showMessageDialog(null, "Error while establishing connection");
         }
-            }
-        });
-        view.sb2.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-              String secret= view.input_sc.getText();
-              if(secret.equals("admin@123")){
+         }
+    public void SubmitSecret(String secret) {
+        if(secret.equals("admin@123")){
               JOptionPane.showMessageDialog(null, "The username and password is 'admin'");
         }
-            }
-            
-        });
     }
 }
