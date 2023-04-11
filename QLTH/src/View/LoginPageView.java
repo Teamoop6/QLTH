@@ -5,6 +5,7 @@
  */
 package View;
 
+import Controller.LoginPageController;
 import QLTH.welcome;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -21,8 +22,11 @@ public class LoginPageView extends javax.swing.JFrame {
     /**
      * Creates new form LoginPage
      */
-    public LoginPageView() {
+    private LoginPageController lpc ;
+    public LoginPageView(LoginPageController lpc) {
+        this.lpc = lpc ;
         initComponents();
+        this.setVisible(true);
     }
 
     /**
@@ -43,9 +47,9 @@ public class LoginPageView extends javax.swing.JFrame {
         input_pass = new javax.swing.JPasswordField();
         jLabel6 = new javax.swing.JLabel();
         input_sc = new javax.swing.JTextField();
-        sb1 = new javax.swing.JButton();
+        button_submit = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        sb2 = new javax.swing.JButton();
+        button_submit_secret = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,13 +68,23 @@ public class LoginPageView extends javax.swing.JFrame {
 
         jLabel6.setText("Enter Secret Code:");
 
-        sb1.setText("Submit");
+        button_submit.setText("Submit");
+        button_submit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_submitActionPerformed(evt);
+            }
+        });
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Logo_PTIT_University.png"))); // NOI18N
         jLabel7.setText("jLabel7");
         jLabel7.setToolTipText("");
 
-        sb2.setText("submit");
+        button_submit_secret.setText("submit");
+        button_submit_secret.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_submit_secretActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -99,7 +113,7 @@ public class LoginPageView extends javax.swing.JFrame {
                         .addComponent(input_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(355, 355, 355)
-                        .addComponent(sb1))
+                        .addComponent(button_submit))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(139, 139, 139)
                         .addComponent(jLabel5))
@@ -109,7 +123,7 @@ public class LoginPageView extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(input_sc, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(sb2)))
+                        .addComponent(button_submit_secret)))
                 .addContainerGap(51, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -134,7 +148,7 @@ public class LoginPageView extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addComponent(input_pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
-                .addComponent(sb1)
+                .addComponent(button_submit)
                 .addGap(6, 6, 6)
                 .addComponent(jLabel5)
                 .addGap(17, 17, 17)
@@ -144,7 +158,7 @@ public class LoginPageView extends javax.swing.JFrame {
                         .addComponent(jLabel6))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(input_sc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(sb2)))
+                        .addComponent(button_submit_secret)))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
@@ -152,48 +166,41 @@ public class LoginPageView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    private void button_submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_submitActionPerformed
+        // TODO add your handling code here:
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginPageView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginPageView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginPageView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginPageView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            // dang nhap
+            String user = input_user.getText();
+            String pass = input_pass.getText();
+            lpc.SubmitLoginPage(user,pass);
+            
+            // check mat khau
+            String secret = input_sc.getText();
+            System.out.println(secret);
+            lpc.SubmitSecret(secret);
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, e);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+    }//GEN-LAST:event_button_submitActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LoginPageView().setVisible(true);
-            }
-        });
-    }
+    private void button_submit_secretActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_submit_secretActionPerformed
+        // TODO add your handling code here:
+        try {
+            // check mat khau
+            String secret = input_sc.getText();
+            lpc.SubmitSecret(secret);
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_button_submit_secretActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JPasswordField input_pass;
-    public javax.swing.JTextField input_sc;
-    public javax.swing.JTextField input_user;
+    private javax.swing.JButton button_submit;
+    private javax.swing.JButton button_submit_secret;
+    private javax.swing.JPasswordField input_pass;
+    private javax.swing.JTextField input_sc;
+    private javax.swing.JTextField input_user;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -201,7 +208,5 @@ public class LoginPageView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    public javax.swing.JButton sb1;
-    public javax.swing.JButton sb2;
     // End of variables declaration//GEN-END:variables
 }

@@ -51,7 +51,7 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="355" pref="355" max="-2" attributes="0"/>
-                      <Component id="sb1" min="-2" max="-2" attributes="0"/>
+                      <Component id="button_submit" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="139" pref="139" max="-2" attributes="0"/>
@@ -63,7 +63,7 @@
                       <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
                       <Component id="input_sc" min="-2" pref="71" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="sb2" min="-2" max="-2" attributes="0"/>
+                      <Component id="button_submit_secret" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="51" max="32767" attributes="0"/>
@@ -96,7 +96,7 @@
                   <Component id="input_pass" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="11" pref="11" max="-2" attributes="0"/>
-              <Component id="sb1" min="-2" max="-2" attributes="0"/>
+              <Component id="button_submit" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="17" pref="17" max="-2" attributes="0"/>
@@ -107,7 +107,7 @@
                   </Group>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="input_sc" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="sb2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="button_submit_secret" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="27" max="32767" attributes="0"/>
@@ -151,14 +151,8 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="input_user">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-      </AuxValues>
     </Component>
     <Component class="javax.swing.JPasswordField" name="input_pass">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
@@ -166,17 +160,14 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="input_sc">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-      </AuxValues>
     </Component>
-    <Component class="javax.swing.JButton" name="sb1">
+    <Component class="javax.swing.JButton" name="button_submit">
       <Properties>
         <Property name="text" type="java.lang.String" value="Submit"/>
       </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-      </AuxValues>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_submitActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
@@ -190,13 +181,13 @@
         <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="LoginPage_jLabel7"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JButton" name="sb2">
+    <Component class="javax.swing.JButton" name="button_submit_secret">
       <Properties>
         <Property name="text" type="java.lang.String" value="submit"/>
       </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-      </AuxValues>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_submit_secretActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

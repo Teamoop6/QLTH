@@ -14,7 +14,7 @@ public class MVCQLTH {
     public static void main(String[] args) {
     // creat view and add view to controller of 
     // loginpage controller
-    LoginPageView view = new LoginPageView() ;
-    LoginPageController lgc = new LoginPageController(view) ;
+    LoginPageController lgc = new LoginPageController() ;
+    LoginPageView view = new LoginPageView(lgc) ;
     }
 }
