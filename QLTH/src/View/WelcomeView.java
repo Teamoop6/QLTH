@@ -5,6 +5,8 @@
  */
 package View;
 
+import Controller.WelcomeController;
+
 /**
  *
  * @author dell
@@ -14,8 +16,11 @@ public class WelcomeView extends javax.swing.JFrame {
     /**
      * Creates new form welcome
      */
-    public WelcomeView() {
+    private WelcomeController wc ;
+    public WelcomeView(WelcomeController wc) {
+        this.wc = wc ;
         initComponents();
+        this.setVisible(true);
     }
 
     /**
@@ -30,7 +35,7 @@ public class WelcomeView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         bt_book = new javax.swing.JButton();
         bt_teacher = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        button_logout = new javax.swing.JLabel();
         bt_st = new javax.swing.JButton();
         bt_bangdiem = new javax.swing.JButton();
 
@@ -39,13 +44,28 @@ public class WelcomeView extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel1.setText("Menu Page");
 
-        bt_book.setText("STUDENT'S MODULE");
+        bt_book.setText("STUDENT TRANSCRIPT'S MODULE");
+        bt_book.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_bookActionPerformed(evt);
+            }
+        });
 
         bt_teacher.setText("TEACHER'S MODULE");
+        bt_teacher.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_teacherActionPerformed(evt);
+            }
+        });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel2.setText("LOGOUT");
+        button_logout.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        button_logout.setForeground(new java.awt.Color(255, 0, 0));
+        button_logout.setText("LOGOUT");
+        button_logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                button_logoutMouseClicked(evt);
+            }
+        });
 
         bt_st.setText("STUDENT'S MODULE");
 
@@ -62,7 +82,7 @@ public class WelcomeView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel2)
+                .addComponent(button_logout)
                 .addGap(62, 62, 62))
             .addGroup(layout.createSequentialGroup()
                 .addGap(261, 261, 261)
@@ -70,20 +90,22 @@ public class WelcomeView extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(147, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(bt_st, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bt_bangdiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(111, 111, 111)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bt_st, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bt_bangdiem, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(113, 113, 113)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bt_book, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bt_teacher))
-                .addGap(145, 145, 145))
+                    .addComponent(bt_book)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(bt_teacher)
+                        .addGap(37, 37, 37)))
+                .addGap(73, 73, 73))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel2)
+                .addComponent(button_logout)
                 .addGap(1, 1, 1)
                 .addComponent(jLabel1)
                 .addGap(76, 76, 76)
@@ -105,50 +127,32 @@ public class WelcomeView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_bt_bangdiemActionPerformed
 
+    private void bt_bookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_bookActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bt_bookActionPerformed
+
+    private void bt_teacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_teacherActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bt_teacherActionPerformed
+
+    private void button_logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_logoutMouseClicked
+        // TODO add your handling code here:
+        wc.logOut();
+        // thoat chuong trinh dang hien
+        dispose();
+    }//GEN-LAST:event_button_logoutMouseClicked
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(WelcomeView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(WelcomeView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(WelcomeView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(WelcomeView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new WelcomeView().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_bangdiem;
     private javax.swing.JButton bt_book;
     private javax.swing.JButton bt_st;
     private javax.swing.JButton bt_teacher;
+    private javax.swing.JLabel button_logout;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }

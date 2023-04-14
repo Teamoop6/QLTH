@@ -22,7 +22,11 @@ public class LoginPageView extends javax.swing.JFrame {
     /**
      * Creates new form LoginPage
      */
+    
+    // tạo biến object controller
     private LoginPageController lpc ;
+    
+    // bỏ object vào biến và hiển thị màn hình
     public LoginPageView(LoginPageController lpc) {
         this.lpc = lpc ;
         initComponents();
@@ -166,6 +170,8 @@ public class LoginPageView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    // nút đăng nhập
     private void button_submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_submitActionPerformed
         // TODO add your handling code here:
         try {
@@ -183,6 +189,8 @@ public class LoginPageView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_button_submitActionPerformed
 
+    
+    // nút check bảo mật
     private void button_submit_secretActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_submit_secretActionPerformed
         // TODO add your handling code here:
         try {

@@ -24,20 +24,29 @@ public class LoginPageController {
 
     }
     
+    
+    // Chức năng đăng nhập 
     public void SubmitLoginPage(String name,String pass) {
         try{
+            
+            // truy cập vào cơ sở dữ liệu
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn= (Connection) DriverManager.getConnection("jdbc:mysql://localhost/qlth","root","team6oop");
             Statement st= (Statement)conn.createStatement();
             String sql= "select * from user_login";
             
+            // kiểm tra có phải là admin
             ResultSet rs= st.executeQuery(sql);
             while(rs.next()){
             String username= rs.getString("username");
             String Password= rs.getString("password");
             
             if(name.equals(username) && pass.equals(Password)){
-            new WelcomeView().setVisible(true);
+            
+            // hien thi welcomeview
+            WelcomeController lpc = new WelcomeController();
+            WelcomeView wv = new WelcomeView(lpc);
+           // new WelcomeView().setVisible(true);
             }
             else
             {
@@ -45,10 +54,13 @@ public class LoginPageController {
             }
             }
         }
+        
         catch(Exception ex){
             JOptionPane.showMessageDialog(null, "Error while establishing connection");
         }
          }
+    
+    // Chức năng kiểm tra bảo mật
     public void SubmitSecret(String secret) {
         if(secret.equals("admin@123")){
               JOptionPane.showMessageDialog(null, "The username and password is 'admin'");
