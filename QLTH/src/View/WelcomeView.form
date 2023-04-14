@@ -41,7 +41,7 @@
               </Group>
               <EmptySpace min="-2" pref="111" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="bt_book" min="-2" max="-2" attributes="0"/>
+                  <Component id="bt_ts" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="bt_teacher" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
@@ -65,7 +65,7 @@
               </Group>
               <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="bt_book" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="bt_ts" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="bt_bangdiem" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="105" max="32767" attributes="0"/>
@@ -82,12 +82,12 @@
         <Property name="text" type="java.lang.String" value="Menu Page"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="bt_book">
+    <Component class="javax.swing.JButton" name="bt_ts">
       <Properties>
         <Property name="text" type="java.lang.String" value="STUDENT TRANSCRIPT&apos;S MODULE"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_bookActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_tsActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="bt_teacher">
@@ -116,6 +116,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="STUDENT&apos;S MODULE"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_stActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="bt_bangdiem">
       <Properties>

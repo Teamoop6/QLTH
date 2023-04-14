@@ -9,21 +9,21 @@ package Model;
  * @author toanc
  */
 public class User {
-    private int Id ;
+    private String Id ;
     private String Name ;
 
     public User() {
         
     }
-    public User(int Id,String Name) {
+    public User(String Id,String Name) {
         this.Id = Id ;
         this.Name = Name ;
     }
-    public int getId() {
+    public String getId() {
         return Id;
     }
 
-    public void setId(int Id) {
+    public void setId(String Id) {
         this.Id = Id;
     }
 

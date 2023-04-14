@@ -4,7 +4,9 @@
  */
 package Controller;
 
+import Model.Student;
 import View.LoginPageView;
+import View.StudentModuleView;
 
 /**
  *
@@ -21,4 +23,9 @@ public class WelcomeController {
         LoginPageView lpv = new LoginPageView(lpc);
     }
     
+    public void StudentModuleSubmit() {
+        Student stu = new Student();
+        StudentModuleController smc = new StudentModuleController(stu);
+        StudentModuleView smv = new StudentModuleView(smc);
+    }
 }

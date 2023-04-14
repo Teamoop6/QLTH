@@ -33,7 +33,7 @@ public class WelcomeView extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        bt_book = new javax.swing.JButton();
+        bt_ts = new javax.swing.JButton();
         bt_teacher = new javax.swing.JButton();
         button_logout = new javax.swing.JLabel();
         bt_st = new javax.swing.JButton();
@@ -44,10 +44,10 @@ public class WelcomeView extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel1.setText("Menu Page");
 
-        bt_book.setText("STUDENT TRANSCRIPT'S MODULE");
-        bt_book.addActionListener(new java.awt.event.ActionListener() {
+        bt_ts.setText("STUDENT TRANSCRIPT'S MODULE");
+        bt_ts.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_bookActionPerformed(evt);
+                bt_tsActionPerformed(evt);
             }
         });
 
@@ -68,6 +68,11 @@ public class WelcomeView extends javax.swing.JFrame {
         });
 
         bt_st.setText("STUDENT'S MODULE");
+        bt_st.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_stActionPerformed(evt);
+            }
+        });
 
         bt_bangdiem.setText("BOOK'S MODULE");
         bt_bangdiem.addActionListener(new java.awt.event.ActionListener() {
@@ -95,7 +100,7 @@ public class WelcomeView extends javax.swing.JFrame {
                     .addComponent(bt_bangdiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(111, 111, 111)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bt_book)
+                    .addComponent(bt_ts)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(bt_teacher)
                         .addGap(37, 37, 37)))
@@ -114,7 +119,7 @@ public class WelcomeView extends javax.swing.JFrame {
                     .addComponent(bt_st, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(79, 79, 79)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bt_book, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bt_ts, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bt_bangdiem, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(105, Short.MAX_VALUE))
         );
@@ -127,9 +132,9 @@ public class WelcomeView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_bt_bangdiemActionPerformed
 
-    private void bt_bookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_bookActionPerformed
+    private void bt_tsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_tsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_bt_bookActionPerformed
+    }//GEN-LAST:event_bt_tsActionPerformed
 
     private void bt_teacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_teacherActionPerformed
         // TODO add your handling code here:
@@ -142,6 +147,13 @@ public class WelcomeView extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_button_logoutMouseClicked
 
+    // hiển thị giao diện student module
+    private void bt_stActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_stActionPerformed
+        // TODO add your handling code here:
+        wc.StudentModuleSubmit();
+        dispose();
+    }//GEN-LAST:event_bt_stActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -149,9 +161,9 @@ public class WelcomeView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_bangdiem;
-    private javax.swing.JButton bt_book;
     private javax.swing.JButton bt_st;
     private javax.swing.JButton bt_teacher;
+    private javax.swing.JButton bt_ts;
     private javax.swing.JLabel button_logout;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
