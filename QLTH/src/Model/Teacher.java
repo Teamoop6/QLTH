@@ -8,6 +8,6 @@ package Model;
  *
  * @author toanc
  */
-public class Student extends Person{
+public class Teacher extends Person{
     
 }
