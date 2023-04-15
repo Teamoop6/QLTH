@@ -138,6 +138,8 @@ public class WelcomeView extends javax.swing.JFrame {
 
     private void bt_teacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_teacherActionPerformed
         // TODO add your handling code here:
+         wc.TeacherModuleSubmit();
+        dispose();
     }//GEN-LAST:event_bt_teacherActionPerformed
 
     private void button_logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_logoutMouseClicked
@@ -153,7 +155,7 @@ public class WelcomeView extends javax.swing.JFrame {
         wc.StudentModuleSubmit();
         dispose();
     }//GEN-LAST:event_bt_stActionPerformed
-
+     
     /**
      * @param args the command line arguments
      */

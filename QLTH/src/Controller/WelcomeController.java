@@ -5,8 +5,10 @@
 package Controller;
 
 import Model.Student;
+import Model.Teacher;
 import View.LoginPageView;
 import View.StudentModuleView;
+import View.TeacherModuleView;
 
 /**
  *
@@ -27,5 +29,10 @@ public class WelcomeController {
         Student stu = new Student();
         StudentModuleController smc = new StudentModuleController(stu);
         StudentModuleView smv = new StudentModuleView(smc);
+    }
+     public void TeacherModuleSubmit() {
+        Teacher ttu = new Teacher();
+        TeacherModuleController tmc = new TeacherModuleController(ttu);
+        TeacherModuleView tmv = new TeacherModuleView(tmc);
     }
 }
