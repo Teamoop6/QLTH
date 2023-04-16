@@ -27,7 +27,7 @@ public class WelcomeController {
     
     public void StudentModuleSubmit() {
         Student stu = new Student();
-        StudentModuleController smc = new StudentModuleController(stu);
+        StudentModuleController smc = new StudentModuleController();
         StudentModuleView smv = new StudentModuleView(smc);
     }
      public void TeacherModuleSubmit() {

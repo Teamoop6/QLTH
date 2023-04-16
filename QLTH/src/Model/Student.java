@@ -9,5 +9,11 @@ package Model;
  * @author toanc
  */
 public class Student extends Person{
+    public Student(String Id,String Name,String Sdt,String Dia_Chi) {
+        super(Id,Name,Sdt,Dia_Chi);
+    }
     
+    public Student(){
+        
+    }
 }
