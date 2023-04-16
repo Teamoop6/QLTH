@@ -85,6 +85,8 @@ public class StudentModuleView extends javax.swing.JFrame {
 
         jLabel4.setText("Phone :");
 
+        input_id.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+
         jLabel5.setText("Address :");
 
         btn_add.setText("Add");
@@ -237,7 +239,7 @@ public class StudentModuleView extends javax.swing.JFrame {
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         // TODO add your handling code here:
        String query = "INSERT INTO `sinh vien`(`Ma_Sinh_Vien`, `Ten`, `So_Dien_Thoai`, `Dia_Chi` ) VALUES ('"+input_id.getText()+"','"+input_name.getText()+"','"+input_phone.getText()+"','"+input_address.getText()+"')";
-    
+
        smc.executeSQlQuery(tb,jTable1,query, "Inserted");
     }//GEN-LAST:event_btn_addActionPerformed
 
