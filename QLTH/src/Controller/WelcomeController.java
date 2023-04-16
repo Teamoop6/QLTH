@@ -17,7 +17,7 @@ import View.TeacherModuleView;
  */
 public class WelcomeController {
     
-    public WelcomeController() {
+   public WelcomeController() {
         
     }
     
@@ -32,8 +32,7 @@ public class WelcomeController {
         StudentModuleView smv = new StudentModuleView(smc);
     }
      public void TeacherModuleSubmit() {
-        Teacher ttu = new Teacher();
-        TeacherModuleController tmc = new TeacherModuleController(ttu);
+        TeacherModuleController tmc = new TeacherModuleController();
         TeacherModuleView tmv = new TeacherModuleView(tmc);
     }
      

@@ -4,7 +4,7 @@
  */
 package Controller;
 
-import Model.Teacher;
+import Model.Student;
 import View.WelcomeView;
 import java.sql.Statement ;
 import java.sql.ResultSet ;
@@ -14,15 +14,15 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-//import View.EditTeacherView;
+//import View.EditStudentView;
 
 /**
  *
  * @author toanc
  */
-public class TeacherModuleController {
+public class BangDiemModuleController {
    
-    public TeacherModuleController() {
+    public BangDiemModuleController() {
     }
     
    // get the connection
@@ -39,35 +39,35 @@ public class TeacherModuleController {
    }
   
    // get a list of users from mysql database
-   public ArrayList<Teacher> getTeachersList()
+   public ArrayList<Student> getStudentsList()
    {
-       ArrayList<Teacher> TeachersList = new ArrayList<Teacher>();
+       ArrayList<Student> StudentsList = new ArrayList<Student>();
        Connection connection = getConnection();
        
-       String query = "SELECT * FROM  `giao vien` ";
+       String query = "SELECT * FROM  `sinh vien` ";
        Statement st;
        ResultSet rs;
        
        try {
            st = connection.createStatement();
            rs = st.executeQuery(query);
-           Teacher ttu;
+           Student stu;
            while(rs.next())
            {
                // tao mot object lay du lieu tu sql
-               ttu = new Teacher(rs.getString("Ma_Giao_Vien"),rs.getString("Ten"),rs.getString("So_Dien_Thoai"),rs.getString("Dia_Chi"));
-               TeachersList.add(ttu);
+               stu = new Student(rs.getString("Ma_Sinh_Vien"),rs.getString("Ten"),rs.getString("So_Dien_Thoai"),rs.getString("Dia_Chi"));
+               StudentsList.add(stu);
            }
        } catch (Exception e) {
            JOptionPane.showMessageDialog(null, e);
        }
-       return TeachersList;
+       return StudentsList;
    }
    
    // Display Data In JTable
    public void Show_Users_In_JTable(DefaultTableModel tb,JTable JTable1)
    {
-       ArrayList<Teacher> list = getTeachersList();
+       ArrayList<Student> list = getStudentsList();
        DefaultTableModel model = (DefaultTableModel) JTable1.getModel();
        Object[] row = new Object[4];
        for(int i = 0; i < list.size(); i++)
