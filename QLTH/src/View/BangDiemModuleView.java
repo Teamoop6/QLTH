@@ -27,9 +27,9 @@ public class BangDiemModuleView extends javax.swing.JFrame {
      */
     
     private DefaultTableModel tb ; 
-    private BangDiemModuleController bmc ;
-    public BangDiemModuleView(StudentModuleController bmc) {
-        this.bmc = bmc ;
+    private BangDiemModuleController bdc ;
+    public BangDiemModuleView(BangDiemModuleController bdc) {
+        this.bdc = bdc ;
         initComponents();
         this.setVisible(true);
         this.Show_Users_In_JTable();
@@ -244,31 +244,31 @@ public class BangDiemModuleView extends javax.swing.JFrame {
     
     private void Show_Users_In_JTable() {
         tb = (DefaultTableModel) jTable1.getModel() ;
-        bmc.Show_Users_In_JTable(tb, jTable1);
+        bdc.Show_Users_In_JTable(tb, jTable1);
     }
     private void btn_backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_backMouseClicked
         // TODO add your handling code here:
-       bmc.backSubmit();
+       bdc.backSubmit();
        dispose();
     }//GEN-LAST:event_btn_backMouseClicked
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         // TODO add your handling code here:
-       String query = "INSERT INTO `bang diem`(`Id`, `Ma_Sinh_Vien`, `OOP`, `CNPM`,`C++`,`KTVXL`  ) VALUES ('"+input_id.getText()+"','"+input_name.getText()+"','"+input_phone.getText()+"','"+input_address.getText()+"')";
+       //String query = "INSERT INTO `bang diem`(`Id`, `Ma_Sinh_Vien`, `OOP`, `CNPM`,`C++`,`KTVXL`  ) VALUES ('"+input_id.getText()+"','"+input_name.getText()+"','"+input_phone.getText()+"','"+input_address.getText()+"')";
     
-       smc.executeSQlQuery(tb,jTable1,query, "Inserted");
+       //bdc.executeSQlQuery(tb,jTable1,query, "Inserted");
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
         // TODO add your handling code here:
-       String query = "UPDATE `sinh vien` SET `Ten`='"+input_name.getText()+"',`So_Dien_Thoai`='"+input_phone.getText()+"',`Dia_Chi`='"+input_address.getText()+"' WHERE Ma_Sinh_Vien = '"+input_id.getText()+"'";
-       smc.executeSQlQuery(tb,jTable1,query, "Updated");
+       //String query = "UPDATE `sinh vien` SET `Ten`='"+input_name.getText()+"',`So_Dien_Thoai`='"+input_phone.getText()+"',`Dia_Chi`='"+input_address.getText()+"' WHERE Ma_Sinh_Vien = '"+input_id.getText()+"'";
+       //bdc.executeSQlQuery(tb,jTable1,query, "Updated");
     }//GEN-LAST:event_btn_editActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
         // TODO add your handling code here:
-       String query = "DELETE FROM `sinh vien` WHERE Ma_Sinh_Vien = "+input_id.getText();
-       smc.executeSQlQuery(tb,jTable1,query, "Deleted");
+       //String query = "DELETE FROM `sinh vien` WHERE Ma_Sinh_Vien = "+input_id.getText();
+       //bdc.executeSQlQuery(tb,jTable1,query, "Deleted");
     }//GEN-LAST:event_btn_deleteActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -279,7 +279,7 @@ public class BangDiemModuleView extends javax.swing.JFrame {
         TableModel model = jTable1.getModel();
         
          // Display Slected Row In JTexteFields
-        input_id.setText(model.getValueAt(i,0).toString());
+        //input_id.setText(model.getValueAt(i,0).toString());
 
         input_name.setText(model.getValueAt(i,1).toString());
 
