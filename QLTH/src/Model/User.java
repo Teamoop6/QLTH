@@ -11,7 +11,7 @@ package Model;
 public class User {
     private String Id ;
     private String Name ;
-
+    
     public User() {
         
     }

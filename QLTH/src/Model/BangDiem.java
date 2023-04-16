@@ -8,12 +8,12 @@ package Model;
  *
  * @author toanc
  */
-public class Teacher extends Person{
-    public Teacher(String Id,String Name,String Sdt,String Dia_Chi) {
-        super(Id,Name,Sdt,Dia_Chi);
-    }
-    
-    public Teacher(){
+public class BangDiem {
+    private String OOP; 
+    private String CNPM ;
+    private String Clt;
+    private String KTVXL ;
+    public BangDiem(){
         
     }
 }
