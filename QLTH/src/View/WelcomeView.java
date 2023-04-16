@@ -37,7 +37,7 @@ public class WelcomeView extends javax.swing.JFrame {
         bt_teacher = new javax.swing.JButton();
         button_logout = new javax.swing.JLabel();
         bt_st = new javax.swing.JButton();
-        bt_bangdiem = new javax.swing.JButton();
+        bt_book = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,10 +74,10 @@ public class WelcomeView extends javax.swing.JFrame {
             }
         });
 
-        bt_bangdiem.setText("BOOK'S MODULE");
-        bt_bangdiem.addActionListener(new java.awt.event.ActionListener() {
+        bt_book.setText("BOOK'S MODULE");
+        bt_book.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_bangdiemActionPerformed(evt);
+                bt_bookActionPerformed(evt);
             }
         });
 
@@ -97,7 +97,7 @@ public class WelcomeView extends javax.swing.JFrame {
                 .addContainerGap(147, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(bt_st, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bt_bangdiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(bt_book, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(111, 111, 111)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(bt_ts)
@@ -120,7 +120,7 @@ public class WelcomeView extends javax.swing.JFrame {
                 .addGap(79, 79, 79)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bt_ts, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bt_bangdiem, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bt_book, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(105, Short.MAX_VALUE))
         );
 
@@ -128,9 +128,11 @@ public class WelcomeView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bt_bangdiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_bangdiemActionPerformed
+    private void bt_bookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_bookActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_bt_bangdiemActionPerformed
+        wc.BookModuleSubmit();
+        dispose();
+    }//GEN-LAST:event_bt_bookActionPerformed
 
     private void bt_tsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_tsActionPerformed
         // TODO add your handling code here:
@@ -162,7 +164,7 @@ public class WelcomeView extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bt_bangdiem;
+    private javax.swing.JButton bt_book;
     private javax.swing.JButton bt_st;
     private javax.swing.JButton bt_teacher;
     private javax.swing.JButton bt_ts;
