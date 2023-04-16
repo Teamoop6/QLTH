@@ -136,6 +136,8 @@ public class WelcomeView extends javax.swing.JFrame {
 
     private void bt_tsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_tsActionPerformed
         // TODO add your handling code here:
+        wc.BangDiemModuleSubmit();
+        dispose();
     }//GEN-LAST:event_bt_tsActionPerformed
 
     private void bt_teacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_teacherActionPerformed

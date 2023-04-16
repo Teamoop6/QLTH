@@ -6,6 +6,7 @@ package Controller;
 
 import Model.Student;
 import Model.Teacher;
+import View.BangDiemModuleView;
 import View.BookModuleView;
 import View.LoginPageView;
 import View.StudentModuleView;
@@ -39,5 +40,10 @@ public class WelcomeController {
     public void BookModuleSubmit() {
         BookModuleController bmc = new BookModuleController();
         BookModuleView bmv = new  BookModuleView(bmc);
+    }
+    
+    public void BangDiemModuleSubmit() {
+        BangDiemModuleController bdm = new BangDiemModuleController();
+        BangDiemModuleView bmv = new  BangDiemModuleView(bdm);
     }
 }

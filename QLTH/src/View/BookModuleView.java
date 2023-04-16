@@ -433,7 +433,7 @@ public class BookModuleView extends javax.swing.JFrame {
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
         // TODO add your handling code here:
-       String query = "DELETE FROM `sach` WHERE Ma_Sach = "+input_id.getText();
+       String query = "DELETE FROM `sach` WHERE Ma_Sach = '"+input_id.getText()+"'";
        bmc.executeSQlQuery(tb,jTable1,query, "Deleted");
     }//GEN-LAST:event_btn_deleteActionPerformed
 
