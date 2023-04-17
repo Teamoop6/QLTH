@@ -24,7 +24,6 @@ public class LoginPageController {
 
     }
     
-    
     // Chức năng đăng nhập 
     public void SubmitLoginPage(String name,String pass) {
         try{
@@ -42,6 +41,9 @@ public class LoginPageController {
             String Password= rs.getString("password");
             
             if(name.equals(username) && pass.equals(Password)){
+            
+            // tao array list student
+            new StudentModuleController().UpdateArrayStudent();
             
             // hien thi welcomeview
             WelcomeController lpc = new WelcomeController();

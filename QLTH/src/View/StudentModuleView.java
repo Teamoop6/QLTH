@@ -32,6 +32,7 @@ public class StudentModuleView extends javax.swing.JFrame {
         this.smc = smc ;
         initComponents();
         this.setVisible(true);
+        // hiển thị dữ liệu sinh viên ra bảng
         this.Show_Users_In_JTable();
     }
 
@@ -238,21 +239,17 @@ public class StudentModuleView extends javax.swing.JFrame {
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         // TODO add your handling code here:
-       String query = "INSERT INTO `sinh vien`(`Ma_Sinh_Vien`, `Ten`, `So_Dien_Thoai`, `Dia_Chi` ) VALUES ('"+input_id.getText()+"','"+input_name.getText()+"','"+input_phone.getText()+"','"+input_address.getText()+"')";
-
-       smc.executeSQlQuery(tb,jTable1,query, "Inserted");
+       smc.addStudent(tb, jTable1, input_id.getText(), input_name.getText(), input_phone.getText(), input_address.getText());
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
         // TODO add your handling code here:
-       String query = "UPDATE `sinh vien` SET `Ten`='"+input_name.getText()+"',`So_Dien_Thoai`='"+input_phone.getText()+"',`Dia_Chi`='"+input_address.getText()+"' WHERE Ma_Sinh_Vien = '"+input_id.getText()+"'";
-       smc.executeSQlQuery(tb,jTable1,query, "Updated");
+       smc.editStudent(tb, jTable1, input_id.getText(), input_name.getText(), input_phone.getText(), input_address.getText());
     }//GEN-LAST:event_btn_editActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
         // TODO add your handling code here:
-       String query = "DELETE FROM `sinh vien` WHERE Ma_Sinh_Vien = "+input_id.getText();
-       smc.executeSQlQuery(tb,jTable1,query, "Deleted");
+       smc.deleteStudent(tb, jTable1, input_id.getText(), input_name.getText(), input_phone.getText(), input_address.getText());
     }//GEN-LAST:event_btn_deleteActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked

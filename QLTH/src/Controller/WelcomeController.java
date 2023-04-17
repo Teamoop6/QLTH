@@ -17,9 +17,9 @@ import View.TeacherModuleView;
  * @author toanc
  */
 public class WelcomeController {
-    
+   
+   
    public WelcomeController() {
-        
     }
     
     public void logOut() {
@@ -28,7 +28,6 @@ public class WelcomeController {
     }
     
     public void StudentModuleSubmit() {
-        Student stu = new Student();
         StudentModuleController smc = new StudentModuleController();
         StudentModuleView smv = new StudentModuleView(smc);
     }

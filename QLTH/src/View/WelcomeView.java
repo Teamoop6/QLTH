@@ -16,6 +16,7 @@ public class WelcomeView extends javax.swing.JFrame {
     /**
      * Creates new form welcome
      */
+    
     private WelcomeController wc ;
     public WelcomeView(WelcomeController wc) {
         this.wc = wc ;
@@ -23,6 +24,7 @@ public class WelcomeView extends javax.swing.JFrame {
         this.setVisible(true);
     }
 
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
