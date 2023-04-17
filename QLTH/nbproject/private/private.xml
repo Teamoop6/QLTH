@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/View/StudentModuleView.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>239</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/E:/PTIT%20nam%204%20ki%202/OOP/QLTH/QLTH/src/View/MVCQLTH.java</file>
-            <file>file:/E:/PTIT%20nam%204%20ki%202/OOP/QLTH/QLTH/src/View/LoginPageView.java</file>
+            <file>file:/E:/PTIT%20nam%204%20ki%202/OOP/QLTH/QLTH/src/View/WelcomeView.java</file>
+            <file>file:/E:/PTIT%20nam%204%20ki%202/OOP/QLTH/QLTH/src/View/BangDiemModuleView.java</file>
+            <file>file:/E:/PTIT%20nam%204%20ki%202/OOP/QLTH/QLTH/src/Model/Student.java</file>
+            <file>file:/E:/PTIT%20nam%204%20ki%202/OOP/QLTH/QLTH/src/Model/Book.java</file>
+            <file>file:/E:/PTIT%20nam%204%20ki%202/OOP/QLTH/QLTH/src/Controller/TeacherModuleController.java</file>
+            <file>file:/E:/PTIT%20nam%204%20ki%202/OOP/QLTH/QLTH/src/Model/BangDiem.java</file>
+            <file>file:/E:/PTIT%20nam%204%20ki%202/OOP/QLTH/QLTH/src/Controller/StudentModuleController.java</file>
+            <file>file:/E:/PTIT%20nam%204%20ki%202/OOP/QLTH/QLTH/src/View/BookModuleView.java</file>
+            <file>file:/E:/PTIT%20nam%204%20ki%202/OOP/QLTH/QLTH/src/View/StudentModuleView.java</file>
+            <file>file:/E:/PTIT%20nam%204%20ki%202/OOP/QLTH/QLTH/src/Model/Person.java</file>
+            <file>file:/E:/PTIT%20nam%204%20ki%202/OOP/QLTH/QLTH/src/Controller/BookModuleController.java</file>
+            <file>file:/E:/PTIT%20nam%204%20ki%202/OOP/QLTH/QLTH/src/Controller/WelcomeController.java</file>
+            <file>file:/E:/PTIT%20nam%204%20ki%202/OOP/QLTH/QLTH/src/Controller/LoginPageController.java</file>
+            <file>file:/E:/PTIT%20nam%204%20ki%202/OOP/QLTH/QLTH/src/Model/User.java</file>
         </group>
     </open-files>
 </project-private>

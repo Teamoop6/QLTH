@@ -22,7 +22,18 @@ import javax.swing.table.DefaultTableModel;
  */
 public class StudentModuleController {
    
-    public StudentModuleController() {
+   private ArrayList<Student> stuList = new ArrayList<Student>() ;
+
+    public ArrayList<Student> getStuList() {
+        return stuList;
+    }
+
+    public void setStuList(ArrayList<Student> stuList) {
+        this.stuList = stuList;
+    }
+   
+   
+   public StudentModuleController() {
     }
     
    // get the connection
@@ -64,6 +75,15 @@ public class StudentModuleController {
        return StudentsList;
    }
    
+   // Update Array Student
+   public void UpdateArrayStudent() {
+       // mảng student = list
+        stuList = getStudentsList() ;
+        for(Student stu : stuList) {
+            System.out.println(stu.getId());
+        }
+   }
+   
    // Display Data In JTable
    public void Show_Users_In_JTable(DefaultTableModel tb,JTable JTable1)
    {
@@ -78,6 +98,7 @@ public class StudentModuleController {
            row[3] = list.get(i).getDia_Chi();
            model.addRow(row);
        }
+       // bảng được hiển thị
         tb = model ;
     }
    
@@ -104,8 +125,45 @@ public class StudentModuleController {
             JOptionPane.showMessageDialog(null, e);
        }
    }
+   
+   
+    public void addStudent(DefaultTableModel tb,JTable JTable1,String id ,String name,String phone,String address) {
+        Student stu = new Student(id,name,phone,address);
+        stuList.add(stu);
+        String query = "INSERT INTO `sinh vien`(`Ma_Sinh_Vien`, `Ten`, `So_Dien_Thoai`, `Dia_Chi` ) VALUES ('"+stu.getId()+"','"+stu.getName()+"','"+stu.getSdt()+"','"+stu.getDia_Chi()+"')";
+        executeSQlQuery(tb,JTable1,query, "Inserted");
+        UpdateArrayStudent();
+    }
+    
+    public void editStudent(DefaultTableModel tb,JTable JTable1,String id ,String name,String phone,String address) {
+        for(Student stu : stuList) {
+            if(id.equals(stu.getId())) {
+              stu.setName(name);
+              stu.setSdt(phone);
+              stu.setDia_Chi(address);
+              String query = "UPDATE `sinh vien` SET `Ten`='"+stu.getName()+"',`So_Dien_Thoai`='"+stu.getSdt()+"',`Dia_Chi`='"+stu.getDia_Chi()+"' WHERE Ma_Sinh_Vien = '"+stu.getId()+"'";
+              executeSQlQuery(tb,JTable1,query, "Updated");
+              break;
+            }
+        }
+        UpdateArrayStudent();
+        
+    }
+    
+    public void deleteStudent(DefaultTableModel tb,JTable JTable1,String id ,String name,String phone,String address) {
+        for(Student stu : stuList) {
+            if(id.equals(stu.getId())) {
+              String query = "DELETE FROM `sinh vien` WHERE Ma_Sinh_Vien = '"+stu.getId()+"'";      
+              executeSQlQuery(tb,JTable1,query, "Deleted");
+              stuList.remove(stu);
+              break;
+            }
+        } 
+        UpdateArrayStudent();
+        
+    }
     public void backSubmit() {
         WelcomeController wc = new WelcomeController();
-        WelcomeView wv = new WelcomeView(wc);
+        new WelcomeView(wc);
     }
 }
