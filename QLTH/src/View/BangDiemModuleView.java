@@ -258,12 +258,14 @@ public class BangDiemModuleView extends javax.swing.JFrame {
 
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
         // TODO add your handling code here:
+       bdc.editBangDiem(tb, jTable1, input_msv.getText(), input_oop.getText(), input_cnpm.getText(), input_clt.getText(),input_ktvxl.getText());
        //String query = "UPDATE `sinh vien` SET `Ten`='"+input_name.getText()+"',`So_Dien_Thoai`='"+input_phone.getText()+"',`Dia_Chi`='"+input_address.getText()+"' WHERE Ma_Sinh_Vien = '"+input_id.getText()+"'";
        //bdc.executeSQlQuery(tb,jTable1,query, "Updated");
     }//GEN-LAST:event_btn_editActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
         // TODO add your handling code here:
+       bdc.deleteStudent(tb, jTable1, input_msv.getText(), input_oop.getText(), input_cnpm.getText(), input_clt.getText(),input_ktvxl.getText());
        //String query = "DELETE FROM `sinh vien` WHERE Ma_Sinh_Vien = "+input_id.getText();
        //bdc.executeSQlQuery(tb,jTable1,query, "Deleted");
     }//GEN-LAST:event_btn_deleteActionPerformed
@@ -291,6 +293,8 @@ public class BangDiemModuleView extends javax.swing.JFrame {
         input_clt.setText(model.getValueAt(i,4).toString());
         
         input_ktvxl.setText(model.getValueAt(i,5).toString());
+        
+        
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(null, e);

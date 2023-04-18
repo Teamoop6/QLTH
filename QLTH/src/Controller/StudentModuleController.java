@@ -148,9 +148,9 @@ public class StudentModuleController {
     public void deleteStudent(DefaultTableModel tb,JTable JTable1,String id ,String name,String phone,String address) {
         for(Student stu : stuList) {
             if(id.equals(stu.getId())) {
-              String query = "DELETE FROM `sinh vien` WHERE Ma_Sinh_Vien = '"+stu.getId()+"'";      
-              executeSQlQuery(tb,JTable1,query, "Deleted");
               stuList.remove(stu);
+              String query = "DELETE FROM `sinh vien` WHERE Ma_Sinh_Vien = '"+id+"'";      
+              executeSQlQuery(tb,JTable1,query, "Deleted"); 
               break;
             }
         } 
