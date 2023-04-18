@@ -58,11 +58,13 @@ public class BangDiemModuleController {
        try {
            st = connection.createStatement();
            rs = st.executeQuery(query);
+           BangDiem.setCount(1);
            BangDiem bd;
            while(rs.next())
            {
                // tao mot object lay du lieu tu sql
                bd = new BangDiem(rs.getString("Ma_Sinh_Vien"),rs.getDouble("OOP"),rs.getDouble("CNPM"),rs.getDouble("C++"),rs.getDouble("KTVXL"));
+               bd.setDTB(rs.getDouble("DTB"));
                BangDiemsList.add(bd);
            }
        } catch (Exception e) {
@@ -75,20 +77,15 @@ public class BangDiemModuleController {
    public void UpdateArrayBangDiem() {
        // mảng student = list
         bdList = getBangDiemtsList() ;
-        for(Student stu1 : stuList) {
-            System.out.println(stu1.getId());
-        }
    }
    // Display Data In JTable
    public void Show_Users_In_JTable(DefaultTableModel tb,JTable JTable1)
    {
        DefaultTableModel model = (DefaultTableModel) JTable1.getModel();
-       Object[] row = new Object[6];
+       Object[] row = new Object[7];
        for(int i = 0; i < bdList.size(); i++)
        {
-           
            row[0] = bdList.get(i).getId();
-           System.out.println("row " + row[0]);
            for(Student stu : stuList) {
                if(stu.getId().equals(bdList.get(i).getMsv())) {
                  row[1] = stuList.get(i).getName();
@@ -98,6 +95,7 @@ public class BangDiemModuleController {
            row[3] = bdList.get(i).getCNPM();
            row[4] = bdList.get(i).getClt();
            row[5] = bdList.get(i).getKTVXL();
+           row[6] = bdList.get(i).getDTB();
            model.addRow(row);
        }
         tb = model ;
@@ -129,49 +127,48 @@ public class BangDiemModuleController {
    
    // hien msv tu hang
    public String showRows(String id) {
-//       for(Student stu : stuList) {
-//           System.out.println(stu.getName() + input_msv);
-//               if(stu.getName().equals(input_msv)) {
-//                 System.out.println("Tim thay");
-//                 return stu.getId();
-//           }
-//      }
      return bdList.get(Integer.parseInt(id)-1).getMsv();
    }
+   
+   public Double tinh_dtb(Double a,Double b,Double c,Double d) {
+       Double dtb = (a+b+c+d)/4;
+       return dtb;
+   }
+   
     public void addBangDiem(DefaultTableModel tb,JTable JTable1,String msv,String OOP,String CNPM,String Clt,String KTVXL) {
         BangDiem bd = new BangDiem(msv,Double.parseDouble(OOP),Double.parseDouble(CNPM),Double.parseDouble(Clt),Double.parseDouble(KTVXL));
+        Double dtb = tinh_dtb(Double.parseDouble(OOP),Double.parseDouble(CNPM),Double.parseDouble(Clt),Double.parseDouble(KTVXL));
+        bd.setDTB(dtb);
         bdList.add(bd);
-        String query = "INSERT INTO `bang diem`(`Ma_Sinh_Vien`, `OOP`, `CNPM`, `C++`, `KTVXL` ) VALUES ('"+msv+"','"+bd.getOOP()+"','"+bd.getCNPM()+"','"+bd.getClt()+"','"+bd.getKTVXL()+"')";
+        String query = "INSERT INTO `bang diem`(`Ma_Sinh_Vien`, `OOP`, `CNPM`, `C++`, `KTVXL` ,`DTB`) VALUES ('"+msv+"','"+bd.getOOP()+"','"+bd.getCNPM()+"','"+bd.getClt()+"','"+bd.getKTVXL()+"','"+bd.getDTB()+"')";
         executeSQlQuery(tb,JTable1,query, "Inserted");
+        
     }
     
-//    public void editStudent(DefaultTableModel tb,JTable JTable1,String msv,String OOP,String CNPM,String Clt,String KTVXL) {
-//        for(BangDiem stu : bdList) {
-//            if(id.equals(stu.getId())) {
-//              stu.setName(name);
-//              stu.setSdt(phone);
-//              stu.setDia_Chi(address);
-//              String query = "UPDATE `sinh vien` SET `Ten`='"+stu.getName()+"',`So_Dien_Thoai`='"+stu.getSdt()+"',`Dia_Chi`='"+stu.getDia_Chi()+"' WHERE Ma_Sinh_Vien = '"+stu.getId()+"'";
-//              executeSQlQuery(tb,JTable1,query, "Updated");
-//              break;
-//            }
-//        }
-//        UpdateArrayBangDiem();
-//        
-//    }
+    public void editBangDiem(DefaultTableModel tb,JTable JTable1,String msv,String OOP,String CNPM,String Clt,String KTVXL) {
+        for(BangDiem bd : bdList) {
+            if(msv.equals(bd.getMsv())) {
+              bd.setOOP(Double.parseDouble(OOP));
+              bd.setCNPM(Double.parseDouble(CNPM));
+              bd.setClt(Double.parseDouble(Clt));
+              bd.setKTVXL(Double.parseDouble(KTVXL));
+              String query = "UPDATE `bang diem` SET `OOP`='"+bd.getOOP()+"',`CNPM`='"+bd.getCNPM()+"',`C++`='"+bd.getClt()+"',`KTVXL`='"+bd.getKTVXL()+"' WHERE Ma_Sinh_Vien = '"+bd.getMsv()+"'";
+              executeSQlQuery(tb,JTable1,query, "Updated");
+              break;
+            }
+        }       
+    }
     
-//    public void deleteStudent(DefaultTableModel tb,JTable JTable1,String id ,String name,String phone,String address) {
-//        for(Student stu : stuList) {
-//            if(id.equals(stu.getId())) {
-//              String query = "DELETE FROM `sinh vien` WHERE Ma_Sinh_Vien = '"+stu.getId()+"'";      
-//              executeSQlQuery(tb,JTable1,query, "Deleted");
-//              stuList.remove(stu);
-//              break;
-//            }
-//        } 
-//        UpdateArrayBangDiem();
-//        
-//    }
+    public void deleteStudent(DefaultTableModel tb,JTable JTable1,String msv,String OOP,String CNPM,String Clt,String KTVXL) {
+        for(BangDiem bd : bdList) {
+            if(msv.equals(bd.getMsv())) {
+              bdList.remove(bd);
+              String query = "DELETE FROM `bang diem` WHERE Ma_Sinh_Vien = '"+msv+"'";      
+              executeSQlQuery(tb,JTable1,query, "Deleted");
+              break;
+            }
+        }       
+    }
    
    
     public void backSubmit() {

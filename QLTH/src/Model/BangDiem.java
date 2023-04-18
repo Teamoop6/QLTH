@@ -16,7 +16,7 @@ public class BangDiem {
     private double CNPM ;
     private double Clt;
     private double KTVXL ;
-
+    private double DTB ;
     public BangDiem(String msv,double OOP, double CNPM, double Clt, double KTVXL){
          // Tăng biến count lên 1 mỗi khi tạo đối tượng mới
         this.id = count; // Sử dụng giá trị của biến count để xác định id của đối tượng hiện tại
@@ -76,5 +76,22 @@ public class BangDiem {
         this.KTVXL = KTVXL;
     }
 
+    public static int getCount() {
+        return count;
+    }
+
+    public static void setCount(int count) {
+        BangDiem.count = count;
+    }
+
+    public double getDTB() {
+        return DTB;
+    }
+
+    public void setDTB(double DTB) {
+        this.DTB = DTB;
+    }
+    
+    
    
 }
