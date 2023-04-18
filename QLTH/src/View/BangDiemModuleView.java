@@ -253,21 +253,16 @@ public class BangDiemModuleView extends javax.swing.JFrame {
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         // TODO add your handling code here:
        bdc.addBangDiem(tb, jTable1, input_msv.getText(), input_oop.getText(), input_cnpm.getText(), input_clt.getText(),input_ktvxl.getText());
-       //bdc.executeSQlQuery(tb,jTable1,query, "Inserted");
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
         // TODO add your handling code here:
        bdc.editBangDiem(tb, jTable1, input_msv.getText(), input_oop.getText(), input_cnpm.getText(), input_clt.getText(),input_ktvxl.getText());
-       //String query = "UPDATE `sinh vien` SET `Ten`='"+input_name.getText()+"',`So_Dien_Thoai`='"+input_phone.getText()+"',`Dia_Chi`='"+input_address.getText()+"' WHERE Ma_Sinh_Vien = '"+input_id.getText()+"'";
-       //bdc.executeSQlQuery(tb,jTable1,query, "Updated");
     }//GEN-LAST:event_btn_editActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
         // TODO add your handling code here:
        bdc.deleteStudent(tb, jTable1, input_msv.getText(), input_oop.getText(), input_cnpm.getText(), input_clt.getText(),input_ktvxl.getText());
-       //String query = "DELETE FROM `sinh vien` WHERE Ma_Sinh_Vien = "+input_id.getText();
-       //bdc.executeSQlQuery(tb,jTable1,query, "Deleted");
     }//GEN-LAST:event_btn_deleteActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -280,10 +275,8 @@ public class BangDiemModuleView extends javax.swing.JFrame {
         
          // Display Slected Row In JTexteFields
         //input_id.setText(model.getValueAt(i,0).toString());
-        String text = model.getValueAt(i,0).toString() ;
-        
+        String text = model.getValueAt(i,0).toString() ;      
         String text_msv = bdc.showRows(text) ;
-//        System.out.println("text = " + text + "text_msv : " + text_msv);
         input_msv.setText(text_msv);
 
         input_oop.setText(model.getValueAt(i,2).toString());
