@@ -79,23 +79,20 @@ public class StudentModuleController {
    public void UpdateArrayStudent() {
        // mảng student = list
         stuList = getStudentsList() ;
-        for(Student stu : stuList) {
-            System.out.println(stu.getId());
-        }
    }
    
    // Display Data In JTable
    public void Show_Users_In_JTable(DefaultTableModel tb,JTable JTable1)
    {
-       ArrayList<Student> list = getStudentsList();
+
        DefaultTableModel model = (DefaultTableModel) JTable1.getModel();
        Object[] row = new Object[4];
-       for(int i = 0; i < list.size(); i++)
+       for(int i = 0; i < stuList.size(); i++)
        {
-           row[0] = list.get(i).getId();
-           row[1] = list.get(i).getName();
-           row[2] = list.get(i).getSdt();
-           row[3] = list.get(i).getDia_Chi();
+           row[0] = stuList.get(i).getId();
+           row[1] = stuList.get(i).getName();
+           row[2] = stuList.get(i).getSdt();
+           row[3] = stuList.get(i).getDia_Chi();
            model.addRow(row);
        }
        // bảng được hiển thị
@@ -132,7 +129,6 @@ public class StudentModuleController {
         stuList.add(stu);
         String query = "INSERT INTO `sinh vien`(`Ma_Sinh_Vien`, `Ten`, `So_Dien_Thoai`, `Dia_Chi` ) VALUES ('"+stu.getId()+"','"+stu.getName()+"','"+stu.getSdt()+"','"+stu.getDia_Chi()+"')";
         executeSQlQuery(tb,JTable1,query, "Inserted");
-        UpdateArrayStudent();
     }
     
     public void editStudent(DefaultTableModel tb,JTable JTable1,String id ,String name,String phone,String address) {
@@ -146,7 +142,6 @@ public class StudentModuleController {
               break;
             }
         }
-        UpdateArrayStudent();
         
     }
     
@@ -159,11 +154,10 @@ public class StudentModuleController {
               break;
             }
         } 
-        UpdateArrayStudent();
         
     }
-    public void backSubmit() {
-        WelcomeController wc = new WelcomeController();
+    public void backSubmit(StudentModuleController smc) {
+        WelcomeController wc = new WelcomeController(smc);
         new WelcomeView(wc);
     }
 }

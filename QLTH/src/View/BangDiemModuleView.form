@@ -128,11 +128,11 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="input_address3" min="-2" pref="153" max="-2" attributes="0"/>
-                              <Component id="input_name" min="-2" pref="153" max="-2" attributes="0"/>
-                              <Component id="input_phone" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
-                              <Component id="input_address" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
-                              <Component id="input_address2" min="-2" pref="153" max="-2" attributes="0"/>
+                              <Component id="input_ktvxl" min="-2" pref="153" max="-2" attributes="0"/>
+                              <Component id="input_msv" min="-2" pref="153" max="-2" attributes="0"/>
+                              <Component id="input_oop" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
+                              <Component id="input_cnpm" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
+                              <Component id="input_clt" min="-2" pref="153" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="73" max="32767" attributes="0"/>
                       </Group>
@@ -147,27 +147,27 @@
                   <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                      <Component id="input_name" min="-2" max="-2" attributes="0"/>
+                      <Component id="input_msv" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="input_phone" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="input_oop" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="input_address" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="input_cnpm" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="input_address2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="input_clt" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="input_address3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="input_ktvxl" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="78" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -191,16 +191,16 @@
             <Property name="text" type="java.lang.String" value="OOP"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="input_name">
+        <Component class="javax.swing.JTextField" name="input_msv">
         </Component>
-        <Component class="javax.swing.JTextField" name="input_phone">
+        <Component class="javax.swing.JTextField" name="input_oop">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
             <Property name="text" type="java.lang.String" value="CNPM"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="input_address">
+        <Component class="javax.swing.JTextField" name="input_cnpm">
         </Component>
         <Component class="javax.swing.JButton" name="btn_add">
           <Properties>
@@ -231,14 +231,14 @@
             <Property name="text" type="java.lang.String" value="C++"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="input_address2">
+        <Component class="javax.swing.JTextField" name="input_clt">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
             <Property name="text" type="java.lang.String" value="KTVXL"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="input_address3">
+        <Component class="javax.swing.JTextField" name="input_ktvxl">
         </Component>
       </SubComponents>
     </Container>

@@ -233,7 +233,7 @@ public class StudentModuleView extends javax.swing.JFrame {
     }
     private void btn_backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_backMouseClicked
         // TODO add your handling code here:
-       smc.backSubmit();
+       smc.backSubmit(smc);
        dispose();
     }//GEN-LAST:event_btn_backMouseClicked
 

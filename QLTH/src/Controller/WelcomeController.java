@@ -18,9 +18,13 @@ import View.TeacherModuleView;
  */
 public class WelcomeController {
    
-   
+   private StudentModuleController smc ;
    public WelcomeController() {
     }
+   
+   public WelcomeController(StudentModuleController smc) {
+       this.smc = smc ;
+   }
     
     public void logOut() {
         LoginPageController lpc = new LoginPageController() ;
@@ -28,7 +32,6 @@ public class WelcomeController {
     }
     
     public void StudentModuleSubmit() {
-        StudentModuleController smc = new StudentModuleController();
         StudentModuleView smv = new StudentModuleView(smc);
     }
      public void TeacherModuleSubmit() {
@@ -42,7 +45,8 @@ public class WelcomeController {
     }
     
     public void BangDiemModuleSubmit() {
-        BangDiemModuleController bdm = new BangDiemModuleController();
+        BangDiemModuleController bdm = new BangDiemModuleController(smc);
+       // BangDiemModuleView bmv = new  BangDiemModuleView(bdm);
         BangDiemModuleView bmv = new  BangDiemModuleView(bdm);
     }
 }
