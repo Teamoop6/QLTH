@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -32,6 +33,7 @@ public class BangDiemModuleView extends javax.swing.JFrame {
         this.bdc = bdc ;
         initComponents();
         this.setVisible(true);
+        this.bdc.UpdateArrayBangDiem();
         this.Show_Users_In_JTable();
     }
 
@@ -51,17 +53,17 @@ public class BangDiemModuleView extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        input_name = new javax.swing.JTextField();
-        input_phone = new javax.swing.JTextField();
+        input_msv = new javax.swing.JTextField();
+        input_oop = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        input_address = new javax.swing.JTextField();
+        input_cnpm = new javax.swing.JTextField();
         btn_add = new javax.swing.JButton();
         btn_edit = new javax.swing.JButton();
         btn_delete = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        input_address2 = new javax.swing.JTextField();
+        input_clt = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        input_address3 = new javax.swing.JTextField();
+        input_ktvxl = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -138,11 +140,11 @@ public class BangDiemModuleView extends javax.swing.JFrame {
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(input_address3, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(input_name, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(input_phone, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(input_address, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(input_address2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(input_ktvxl, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(input_msv, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(input_oop, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(input_cnpm, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(input_clt, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 73, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -152,23 +154,23 @@ public class BangDiemModuleView extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(input_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(input_msv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(input_phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(input_oop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(input_address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(input_cnpm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(input_address2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(input_clt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(input_address3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(input_ktvxl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_add)
@@ -240,7 +242,7 @@ public class BangDiemModuleView extends javax.swing.JFrame {
     
     private void Show_Users_In_JTable() {
         tb = (DefaultTableModel) jTable1.getModel() ;
-      //  bdc.Show_Users_In_JTable(tb, jTable1);
+        bdc.Show_Users_In_JTable(tb, jTable1);
     }
     private void btn_backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_backMouseClicked
         // TODO add your handling code here:
@@ -250,8 +252,7 @@ public class BangDiemModuleView extends javax.swing.JFrame {
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         // TODO add your handling code here:
-       //String query = "INSERT INTO `bang diem`(`Id`, `Ma_Sinh_Vien`, `OOP`, `CNPM`,`C++`,`KTVXL`  ) VALUES ('"+input_id.getText()+"','"+input_name.getText()+"','"+input_phone.getText()+"','"+input_address.getText()+"')";
-    
+       bdc.addBangDiem(tb, jTable1, input_msv.getText(), input_oop.getText(), input_cnpm.getText(), input_clt.getText(),input_ktvxl.getText());
        //bdc.executeSQlQuery(tb,jTable1,query, "Inserted");
     }//GEN-LAST:event_btn_addActionPerformed
 
@@ -270,18 +271,30 @@ public class BangDiemModuleView extends javax.swing.JFrame {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         // Get The Index Of The Slected Row 
+        try {
         int i = jTable1.getSelectedRow();
 
         TableModel model = jTable1.getModel();
         
          // Display Slected Row In JTexteFields
         //input_id.setText(model.getValueAt(i,0).toString());
+        String text = model.getValueAt(i,0).toString() ;
+        
+        String text_msv = bdc.showRows(text) ;
+//        System.out.println("text = " + text + "text_msv : " + text_msv);
+        input_msv.setText(text_msv);
 
-        input_name.setText(model.getValueAt(i,1).toString());
+        input_oop.setText(model.getValueAt(i,2).toString());
 
-        input_phone.setText(model.getValueAt(i,2).toString());
-
-        input_address.setText(model.getValueAt(i,3).toString());
+        input_cnpm.setText(model.getValueAt(i,3).toString());
+        
+        input_clt.setText(model.getValueAt(i,4).toString());
+        
+        input_ktvxl.setText(model.getValueAt(i,5).toString());
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+       }
     }//GEN-LAST:event_jTable1MouseClicked
 
 
@@ -290,11 +303,11 @@ public class BangDiemModuleView extends javax.swing.JFrame {
     private javax.swing.JLabel btn_back;
     private javax.swing.JButton btn_delete;
     private javax.swing.JButton btn_edit;
-    private javax.swing.JTextField input_address;
-    private javax.swing.JTextField input_address2;
-    private javax.swing.JTextField input_address3;
-    private javax.swing.JTextField input_name;
-    private javax.swing.JTextField input_phone;
+    private javax.swing.JTextField input_clt;
+    private javax.swing.JTextField input_cnpm;
+    private javax.swing.JTextField input_ktvxl;
+    private javax.swing.JTextField input_msv;
+    private javax.swing.JTextField input_oop;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

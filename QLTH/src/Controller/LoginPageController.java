@@ -43,10 +43,11 @@ public class LoginPageController {
             if(name.equals(username) && pass.equals(Password)){
             
             // tao array list student
-            new StudentModuleController().UpdateArrayStudent();
-            
+            StudentModuleController smc = new StudentModuleController();
+            smc.UpdateArrayStudent();
+
             // hien thi welcomeview
-            WelcomeController lpc = new WelcomeController();
+            WelcomeController lpc = new WelcomeController(smc);
             WelcomeView wv = new WelcomeView(lpc);
            // new WelcomeView().setVisible(true);
             }
