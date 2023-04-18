@@ -140,7 +140,7 @@ public class BangDiemModuleController {
         Double dtb = tinh_dtb(Double.parseDouble(OOP),Double.parseDouble(CNPM),Double.parseDouble(Clt),Double.parseDouble(KTVXL));
         bd.setDTB(dtb);
         bdList.add(bd);
-        String query = "INSERT INTO `bang diem`(`Ma_Sinh_Vien`, `OOP`, `CNPM`, `C++`, `KTVXL` ,`DTB`) VALUES ('"+msv+"','"+bd.getOOP()+"','"+bd.getCNPM()+"','"+bd.getClt()+"','"+bd.getKTVXL()+"','"+bd.getDTB()+"')";
+        String query = "INSERT INTO `bang diem`(`Id` , `Ma_Sinh_Vien`, `OOP`, `CNPM`, `C++`, `KTVXL` ,`DTB`) VALUES ('"+bd.getId()+"','"+msv+"','"+bd.getOOP()+"','"+bd.getCNPM()+"','"+bd.getClt()+"','"+bd.getKTVXL()+"','"+bd.getDTB()+"')";
         executeSQlQuery(tb,JTable1,query, "Inserted");
         
     }
@@ -152,7 +152,11 @@ public class BangDiemModuleController {
               bd.setCNPM(Double.parseDouble(CNPM));
               bd.setClt(Double.parseDouble(Clt));
               bd.setKTVXL(Double.parseDouble(KTVXL));
-              String query = "UPDATE `bang diem` SET `OOP`='"+bd.getOOP()+"',`CNPM`='"+bd.getCNPM()+"',`C++`='"+bd.getClt()+"',`KTVXL`='"+bd.getKTVXL()+"' WHERE Ma_Sinh_Vien = '"+bd.getMsv()+"'";
+              Double dtb = tinh_dtb(Double.parseDouble(OOP),Double.parseDouble(CNPM),Double.parseDouble(Clt),Double.parseDouble(KTVXL));
+              bd.setDTB(dtb);
+              
+              
+              String query = "UPDATE `bang diem` SET `OOP`='"+bd.getOOP()+"',`CNPM`='"+bd.getCNPM()+"',`C++`='"+bd.getClt()+"',`KTVXL`='"+bd.getKTVXL()+"',`DTB`='"+bd.getDTB()+"' WHERE Ma_Sinh_Vien = '"+bd.getMsv()+"'";
               executeSQlQuery(tb,JTable1,query, "Updated");
               break;
             }
@@ -163,6 +167,7 @@ public class BangDiemModuleController {
         for(BangDiem bd : bdList) {
             if(msv.equals(bd.getMsv())) {
               bdList.remove(bd);
+              BangDiem.setCount(BangDiem.getCount()-1);
               String query = "DELETE FROM `bang diem` WHERE Ma_Sinh_Vien = '"+msv+"'";      
               executeSQlQuery(tb,JTable1,query, "Deleted");
               break;
