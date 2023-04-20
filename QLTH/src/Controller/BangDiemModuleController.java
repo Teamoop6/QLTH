@@ -73,9 +73,9 @@ public class BangDiemModuleController {
        return BangDiemsList;
    }
    
-   // Update Array Student
+   // Update Array BangDiem
    public void UpdateArrayBangDiem() {
-       // mảng student = list
+       // mảng bangdiem = list
         bdList = getBangDiemtsList() ;
    }
    // Display Data In JTable
@@ -88,7 +88,7 @@ public class BangDiemModuleController {
            row[0] = bdList.get(i).getId();
            for(Student stu : stuList) {
                if(stu.getId().equals(bdList.get(i).getMsv())) {
-                 row[1] = stuList.get(i).getName();
+                 row[1] = stu.getName();
            }
            }
            row[2] = bdList.get(i).getOOP();

@@ -142,7 +142,6 @@ public class StudentModuleController {
               break;
             }
         }
-        
     }
     
     public void deleteStudent(DefaultTableModel tb,JTable JTable1,String id ,String name,String phone,String address) {

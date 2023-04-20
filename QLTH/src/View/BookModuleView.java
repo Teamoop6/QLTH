@@ -6,13 +6,6 @@
 package View;
 
 import Controller.BookModuleController;
-import Controller.StudentModuleController;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -24,20 +17,20 @@ import javax.swing.table.TableModel;
 public class BookModuleView extends javax.swing.JFrame {
 
     /**
-     * Creates new form studentsmodule
      */
     
-    private DefaultTableModel tb , svms , gvms ;
+    private DefaultTableModel tb , tb1 ;
     private BookModuleController bmc ;
     public BookModuleView(BookModuleController bmc) {
         this.bmc = bmc ;
         initComponents();
         this.setVisible(true);
+        this.bmc.UpdateArrayBook();
+        this.bmc.UpdateArraySvmsBook();
         this.HienThi_Sach();
+        this.HienThi_SV_MuonSach();
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -72,7 +65,7 @@ public class BookModuleView extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         input_ma = new javax.swing.JTextField();
-        input_ten_sach_muon = new javax.swing.JTextField();
+        input_ms = new javax.swing.JTextField();
         input_ngay_muon = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         input_ngay_tra = new javax.swing.JTextField();
@@ -195,7 +188,7 @@ public class BookModuleView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Mã", "Tên", "Tác Giả", "Sách"
+                "Mã", "Tên", "Tác Giả", "Giá"
             }
         ));
         jTable1.setRequestFocusEnabled(false);
@@ -205,6 +198,10 @@ public class BookModuleView extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(40);
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(100);
+        }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -232,24 +229,26 @@ public class BookModuleView extends javax.swing.JFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Tên Sách", "Người Mượn", "Ngày Mượn", "Ngày Trả"
             }
         ));
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
         if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(0).setPreferredWidth(20);
+            jTable2.getColumnModel().getColumn(0).setPreferredWidth(100);
             jTable2.getColumnModel().getColumn(1).setPreferredWidth(100);
         }
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Registation"));
 
-        jLabel7.setText("Tên Sách :");
+        jLabel7.setText("Sách :");
 
         jLabel8.setText("Ngày Mượn :");
 
@@ -315,7 +314,7 @@ public class BookModuleView extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(input_ngay_muon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(input_ngay_tra, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(input_ten_sach_muon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(input_ms, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(input_ma, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(47, 47, 47))
         );
@@ -333,7 +332,7 @@ public class BookModuleView extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel7)
-                    .addComponent(input_ten_sach_muon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(input_ms, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -406,9 +405,13 @@ public class BookModuleView extends javax.swing.JFrame {
         bmc.HienThi_Sach(tb, jTable1);
     }
     
+    private void HienThi_Sach_test() {
+        bmc.HienThi_Sach(tb1, jTable2);
+    }
+    
     private void HienThi_SV_MuonSach() {
-        svms = (DefaultTableModel) jTable2.getModel() ;
-       
+        tb1 = (DefaultTableModel) jTable2.getModel() ;
+        bmc.HienThi_SVms(tb1, jTable2);
     }
     
     
@@ -420,21 +423,17 @@ public class BookModuleView extends javax.swing.JFrame {
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         // TODO add your handling code here:
-       String query = "INSERT INTO `sach`(`Ma_Sach`, `Ten`, `Tac_Gia`, `Gia` ) VALUES ('"+input_id.getText()+"','"+input_name.getText()+"','"+input_tac_gia.getText()+"','"+input_gia.getText()+"')";
-
-       bmc.executeSQlQuery(tb,jTable1,query, "Inserted");
+       bmc.addBook(tb, jTable1, input_id.getText(), input_name.getText(), input_tac_gia.getText(), input_gia.getText());
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
         // TODO add your handling code here:
-       String query = "UPDATE `sach` SET `Ten`='"+input_name.getText()+"',`Tac_Gia`='"+input_tac_gia.getText()+"',`Gia`='"+input_gia.getText()+"' WHERE Ma_Sach = '"+input_id.getText()+"'";
-       bmc.executeSQlQuery(tb,jTable1,query, "Updated");
+       bmc.editBook(tb, jTable1, input_id.getText(), input_name.getText(), input_tac_gia.getText(), input_gia.getText());
     }//GEN-LAST:event_btn_editActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
         // TODO add your handling code here:
-       String query = "DELETE FROM `sach` WHERE Ma_Sach = '"+input_id.getText()+"'";
-       bmc.executeSQlQuery(tb,jTable1,query, "Deleted");
+       bmc.deleteBook(tb, jTable1, input_id.getText(), input_name.getText(), input_tac_gia.getText(), input_gia.getText());
     }//GEN-LAST:event_btn_deleteActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -457,22 +456,55 @@ public class BookModuleView extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
         int index = jComboBox1.getSelectedIndex();
-        if(index == 0) {
-            
+        
+        if(index == 1) {
+       tb1.setRowCount(0);
+       this.HienThi_Sach_test();
         } 
+        else if(index == 0){
+        tb1.setRowCount(0);
+        this.HienThi_SV_MuonSach();
+        }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void btn_add1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add1ActionPerformed
         // TODO add your handling code here:
+      bmc.addSvmsBook(tb1, jTable2, input_ma.getText(), input_ms.getText(), input_ngay_muon.getText(), input_ngay_tra.getText());
     }//GEN-LAST:event_btn_add1ActionPerformed
 
     private void btn_edit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit1ActionPerformed
         // TODO add your handling code here:
+      bmc.editSvmsBook(tb1, jTable2, input_ma.getText(), input_ms.getText(), input_ngay_muon.getText(), input_ngay_tra.getText());
     }//GEN-LAST:event_btn_edit1ActionPerformed
 
     private void btn_delete1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_delete1ActionPerformed
         // TODO add your handling code here:
+      bmc.deleteSvmsBook(tb1, jTable2, input_ma.getText(), input_ms.getText(), input_ngay_muon.getText(), input_ngay_tra.getText());
     }//GEN-LAST:event_btn_delete1ActionPerformed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        // TODO add your handling code here:
+        try {
+        int i = jTable2.getSelectedRow();
+        TableModel model = jTable2.getModel();
+        
+      
+        String ma= bmc.showMsv(i) ;
+        input_ma.setText(ma);
+
+        String ms = bmc.showMs(i);
+        input_ms.setText(ms);
+
+        input_ngay_muon.setText(model.getValueAt(i,2).toString());
+        
+        input_ngay_tra.setText(model.getValueAt(i,3).toString());
+             
+        
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+       }
+    }//GEN-LAST:event_jTable2MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -486,11 +518,11 @@ public class BookModuleView extends javax.swing.JFrame {
     private javax.swing.JTextField input_gia;
     private javax.swing.JTextField input_id;
     private javax.swing.JTextField input_ma;
+    private javax.swing.JTextField input_ms;
     private javax.swing.JTextField input_name;
     private javax.swing.JTextField input_ngay_muon;
     private javax.swing.JTextField input_ngay_tra;
     private javax.swing.JTextField input_tac_gia;
-    private javax.swing.JTextField input_ten_sach_muon;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
