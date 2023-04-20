@@ -40,7 +40,7 @@ public class WelcomeController {
     }
      
     public void BookModuleSubmit() {
-        BookModuleController bmc = new BookModuleController();
+        BookModuleController bmc = new BookModuleController(smc);
         BookModuleView bmv = new  BookModuleView(bmc);
     }
     

@@ -6,14 +6,7 @@
 package View;
 
 import Controller.BangDiemModuleController;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.util.Vector;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -270,7 +263,6 @@ public class BangDiemModuleView extends javax.swing.JFrame {
         // Get The Index Of The Slected Row 
         try {
         int i = jTable1.getSelectedRow();
-
         TableModel model = jTable1.getModel();
         
          // Display Slected Row In JTexteFields
