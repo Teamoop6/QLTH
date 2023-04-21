@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-//import View.EditTeacherView;
 
 /**
  *
@@ -104,8 +103,4 @@ public class TeacherModuleController {
             JOptionPane.showMessageDialog(null, e);
        }
    }
-    public void backSubmit() {
-        WelcomeController wc = new WelcomeController();
-        WelcomeView wv = new WelcomeView(wc);
-    }
 }

@@ -4,10 +4,7 @@
  */
 package Controller;
 
-import View.LoginPageView;
 import View.WelcomeView;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -42,14 +39,10 @@ public class LoginPageController {
             
             if(name.equals(username) && pass.equals(Password)){
             
-            // tao array list student
-            StudentModuleController smc = new StudentModuleController();
-            smc.UpdateArrayStudent();
 
             // hien thi welcomeview
-            WelcomeController lpc = new WelcomeController(smc);
-            WelcomeView wv = new WelcomeView(lpc);
-           // new WelcomeView().setVisible(true);
+             WelcomeView wv = new WelcomeView();
+             WelcomeController lpc = new WelcomeController(wv); 
             }
             else
             {

@@ -5,7 +5,16 @@
  */
 package View;
 
-import Controller.BookModuleController;
+import Controller.WelcomeController;
+import Model.Book;
+import Model.Student;
+import Model.Svms;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -16,19 +25,10 @@ import javax.swing.table.TableModel;
  */
 public class BookModuleView extends javax.swing.JFrame {
 
-    /**
-     */
-    
-    private DefaultTableModel tb , tb1 ;
-    private BookModuleController bmc ;
-    public BookModuleView(BookModuleController bmc) {
-        this.bmc = bmc ;
+    private DefaultTableModel tb1 , tb2 ;
+    public BookModuleView() {
         initComponents();
         this.setVisible(true);
-        this.bmc.UpdateArrayBook();
-        this.bmc.UpdateArraySvmsBook();
-        this.HienThi_Sach();
-        this.HienThi_SV_MuonSach();
     }
 
     /**
@@ -103,25 +103,10 @@ public class BookModuleView extends javax.swing.JFrame {
         jLabel5.setText("Giá :");
 
         btn_add.setText("Add");
-        btn_add.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_addActionPerformed(evt);
-            }
-        });
 
         btn_edit.setText("Edit");
-        btn_edit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_editActionPerformed(evt);
-            }
-        });
 
         btn_delete.setText("Delete");
-        btn_delete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_deleteActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -235,11 +220,6 @@ public class BookModuleView extends javax.swing.JFrame {
                 "Tên Sách", "Người Mượn", "Ngày Mượn", "Ngày Trả"
             }
         ));
-        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable2MouseClicked(evt);
-            }
-        });
         jScrollPane2.setViewportView(jTable2);
         if (jTable2.getColumnModel().getColumnCount() > 0) {
             jTable2.getColumnModel().getColumn(0).setPreferredWidth(100);
@@ -257,32 +237,12 @@ public class BookModuleView extends javax.swing.JFrame {
         jLabel9.setText("Ngày Trả :");
 
         btn_add1.setText("Add");
-        btn_add1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_add1ActionPerformed(evt);
-            }
-        });
 
         btn_edit1.setText("Edit");
-        btn_edit1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_edit1ActionPerformed(evt);
-            }
-        });
 
         btn_delete1.setText("Delete");
-        btn_delete1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_delete1ActionPerformed(evt);
-            }
-        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sinh Viên", "Giáo Viên" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
 
         jLabel10.setText("Nhập ID :");
 
@@ -400,42 +360,180 @@ public class BookModuleView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     
-    private void HienThi_Sach() {
-        tb = (DefaultTableModel) jTable1.getModel() ;
-        bmc.HienThi_Sach(tb, jTable1);
+     private Connection getConnection()
+   {
+       Connection con;
+       try {
+           con = DriverManager.getConnection("jdbc:mysql://localhost/qlth", "root","team6oop");
+           return con;
+       } catch (Exception e) {
+           e.printStackTrace();
+           return null;
+       }
+   }
+     
+   // Execute The Insert Update And Delete Querys
+   public void executeSQlQuery1(ArrayList<Book> bookList,String query, String message)
+   {
+       Connection con = getConnection();
+       Statement st;
+       try{
+           st = con.createStatement();
+           
+           // thực thi câu lệnh truy vấn
+           if((st.executeUpdate(query)) == 1)
+           {
+               // refresh jtable data
+               tb1.setRowCount(0);
+               HienThi_Sach(bookList);
+               
+               JOptionPane.showMessageDialog(null, "Data "+message+" Succefully");
+           }else{
+               JOptionPane.showMessageDialog(null, "Data Not "+message);
+           }
+       }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+       }
+   }
+   
+   public void executeSQlQuery2(ArrayList<Svms> svmsList,ArrayList<Book> bookList,ArrayList<Student> stuList,String query, String message)
+   {
+       Connection con = getConnection();
+       Statement st;
+       try{
+           st = con.createStatement();
+           
+           // thực thi câu lệnh truy vấn
+           if((st.executeUpdate(query)) == 1)
+           {
+               // refresh jtable data
+               tb2.setRowCount(0);
+               HienThi_SVms(svmsList,bookList,stuList);
+               
+               JOptionPane.showMessageDialog(null, "Data "+message+" Succefully");
+           }else{
+               JOptionPane.showMessageDialog(null, "Data Not "+message);
+           }
+       }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+       }
+   }
+   // Display Data In JTable
+   public void HienThi_Sach(ArrayList<Book> bookList)
+   {
+        tb1 = (DefaultTableModel) jTable1.getModel();
+       Object[] row = new Object[4];
+       for(int i = 0; i < bookList.size(); i++)
+       {
+           row[0] = bookList.get(i).getId();
+           row[1] = bookList.get(i).getName();
+           row[2] = bookList.get(i).getTac_gia();
+           row[3] = bookList.get(i).getGia();
+           tb1.addRow(row);
+       }
+    }
+   
+    public void HienThi_SVms(ArrayList<Svms> svmsList,ArrayList<Book> bookList,ArrayList<Student> stuList)
+   {
+       tb2 = (DefaultTableModel) jTable2.getModel();
+       Object[] row = new Object[4];
+       for(int i = 0; i < svmsList.size(); i++)
+       {
+           for(Book bk : bookList) {
+               if(bk.getId().equals(svmsList.get(i).getMa_sach())) {      
+                 row[0] = bk.getName();
+           }
+           }
+           for(Student stu : stuList) {
+               if(stu.getId().equals(svmsList.get(i).getMa_sv())) {
+                 row[1] = stu.getName();
+           }
+           }
+           row[2] = svmsList.get(i).getNgay_muon();
+           row[3] = svmsList.get(i).getNgay_tra();
+           tb2.addRow(row);
+       }
     }
     
-    private void HienThi_Sach_test() {
-        bmc.HienThi_Sach(tb1, jTable2);
+    public void addBook(ArrayList<Book> bookList) {
+        btn_add.addActionListener((e) -> {
+        Book bk = new Book(input_id.getText(), input_name.getText(), input_tac_gia.getText(), Integer.parseInt(input_gia.getText()));
+        bookList.add(bk);
+        String query = "INSERT INTO `sach`(`Ma_Sach`, `Ten`, `Tac_Gia`, `Gia` ) VALUES ('"+bk.getId()+"','"+bk.getName()+"','"+bk.getTac_gia()+"','"+bk.getGia()+"')";
+        executeSQlQuery1(bookList,query, "Inserted");
+        });
+        
     }
     
-    private void HienThi_SV_MuonSach() {
-        tb1 = (DefaultTableModel) jTable2.getModel() ;
-        bmc.HienThi_SVms(tb1, jTable2);
+    public void editBook(ArrayList<Book> bookList) {
+        btn_edit.addActionListener((e) -> {
+          for(Book bk : bookList) {
+            if(input_id.getText().equals(bk.getId())) {
+              bk.setName(input_name.getText());
+              bk.setTac_gia(input_tac_gia.getText());
+              bk.setGia(Integer.parseInt(input_gia.getText()));
+              String query = "UPDATE `sach` SET `Ten`='"+bk.getName()+"',`Tac_Gia`='"+bk.getTac_gia()+"',`Gia`='"+bk.getGia()+"' WHERE Ma_Sach = '"+bk.getId()+"'";
+              executeSQlQuery1(bookList,query, "Updated");
+              break;
+            }
+          }
+        });         
     }
     
     
+   public void deleteBook(ArrayList<Book> bookList) {
+        btn_delete.addActionListener((e) -> {
+        for(Book bk : bookList) {
+            if(input_id.getText().equals(bk.getId())) {
+              bookList.remove(bk);
+              String query = "DELETE FROM `sach` WHERE Ma_Sach = '"+input_id.getText()+"'";  
+              executeSQlQuery1(bookList,query, "Deleted"); 
+              break;
+            }
+        } 
+     }); 
+    }
+   
+   public void addSvmsBook(ArrayList<Svms> svmsList,ArrayList<Book> bookList,ArrayList<Student> stuList){
+       btn_add1.addActionListener((e) -> {
+        Svms svm = new Svms(input_ma.getText(), input_ms.getText(), input_ngay_muon.getText(), input_ngay_tra.getText());
+        String query = "INSERT INTO `SV MUON SACH`(`Ma_Sinh_Vien`, `Ma_Sach`, `Ngay_Muon`, `Ngay_Tra` ) VALUES ('"+input_ma.getText()+"','"+input_ms.getText()+"','"+input_ngay_muon.getText()+"','"+input_ngay_tra.getText()+"')";
+        executeSQlQuery2(svmsList,bookList,stuList,query, "Inserted");
+       });
+    }
+    public void editSvmsBook(ArrayList<Svms> svmsList,ArrayList<Book> bookList,ArrayList<Student> stuList){
+       btn_edit1.addActionListener((e) -> {
+        for(Svms svms : svmsList) {
+            if(input_ma.getText().equals(svms.getMa_sv()) && input_ms.getText().equals(svms.getMa_sach())) {
+              svms.setNgay_muon(input_ngay_muon.getText());
+              svms.setNgay_tra(input_ngay_tra.getText());
+              String query = "UPDATE `SV MUON SACH` SET `Ngay_Muon`='"+input_ngay_muon.getText()+"',`Ngay_Tra`='"+input_ngay_tra.getText()+"' WHERE Ma_Sinh_Vien = '"+input_ma.getText()+"' AND Ma_Sach = '"+input_ms.getText()+"'";
+              executeSQlQuery2(svmsList,bookList,stuList,query, "Updated");
+              break;
+            }
+        }
+       });
+    }
+    
+    public void deleteSvmsBook(ArrayList<Svms> svmsList,ArrayList<Book> bookList,ArrayList<Student> stuList){
+        btn_delete1.addActionListener((e) -> {
+        for(Svms svms : svmsList) {
+            if(input_ma.getText().equals(svms.getMa_sv()) && input_ms.getText().equals(svms.getMa_sach())) {
+              svmsList.remove(svms);
+              String query = "DELETE FROM `SV MUON SACH` WHERE Ma_Sach = '"+input_ms.getText()+"' AND Ma_Sinh_Vien = '"+input_ma.getText()+"'"; 
+              executeSQlQuery2(svmsList,bookList,stuList,query,  "Deleted"); 
+              break;
+            }
+        } 
+       }); 
+    }
     private void btn_backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_backMouseClicked
         // TODO add your handling code here:
-       bmc.backSubmit();
+       WelcomeView wv = new WelcomeView();
+       WelcomeController wc = new WelcomeController(wv);
        dispose();
     }//GEN-LAST:event_btn_backMouseClicked
-
-    private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-        // TODO add your handling code here:
-       bmc.addBook(tb, jTable1, input_id.getText(), input_name.getText(), input_tac_gia.getText(), input_gia.getText());
-    }//GEN-LAST:event_btn_addActionPerformed
-
-    private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
-        // TODO add your handling code here:
-       bmc.editBook(tb, jTable1, input_id.getText(), input_name.getText(), input_tac_gia.getText(), input_gia.getText());
-    }//GEN-LAST:event_btn_editActionPerformed
-
-    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
-        // TODO add your handling code here:
-       bmc.deleteBook(tb, jTable1, input_id.getText(), input_name.getText(), input_tac_gia.getText(), input_gia.getText());
-    }//GEN-LAST:event_btn_deleteActionPerformed
-
+    
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         // Get The Index Of The Slected Row
@@ -452,60 +550,55 @@ public class BookModuleView extends javax.swing.JFrame {
 
         input_gia.setText(model.getValueAt(i,3).toString());
     }//GEN-LAST:event_jTable1MouseClicked
+    
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
+    public void doi_bangms(ArrayList<Svms> svmsList,ArrayList<Book> bookList,ArrayList<Student> stuList){
+      jComboBox1.addActionListener((e) -> {
         int index = jComboBox1.getSelectedIndex();
-        
-        if(index == 1) {
-       tb1.setRowCount(0);
-       this.HienThi_Sach_test();
+         if(index == 1) {
+          tb2.setRowCount(0);
+          this.resetText();
         } 
         else if(index == 0){
-        tb1.setRowCount(0);
-        this.HienThi_SV_MuonSach();
+          tb2.setRowCount(0);
+          this.HienThi_SVms(svmsList, bookList, stuList);
         }
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
-    private void btn_add1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add1ActionPerformed
-        // TODO add your handling code here:
-      bmc.addSvmsBook(tb1, jTable2, input_ma.getText(), input_ms.getText(), input_ngay_muon.getText(), input_ngay_tra.getText());
-    }//GEN-LAST:event_btn_add1ActionPerformed
-
-    private void btn_edit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit1ActionPerformed
-        // TODO add your handling code here:
-      bmc.editSvmsBook(tb1, jTable2, input_ma.getText(), input_ms.getText(), input_ngay_muon.getText(), input_ngay_tra.getText());
-    }//GEN-LAST:event_btn_edit1ActionPerformed
-
-    private void btn_delete1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_delete1ActionPerformed
-        // TODO add your handling code here:
-      bmc.deleteSvmsBook(tb1, jTable2, input_ma.getText(), input_ms.getText(), input_ngay_muon.getText(), input_ngay_tra.getText());
-    }//GEN-LAST:event_btn_delete1ActionPerformed
-
-    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
-        // TODO add your handling code here:
-        try {
+      });
+    }
+    
+    private void resetText() {
+       input_ma.setText("");
+       input_ms.setText("");
+       input_ngay_muon.setText("");
+       input_ngay_tra.setText("");
+    }   
+    public void chonHang(ArrayList<Svms> svmsList) {
+         jTable2.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            // TODO add your handling code here:
+          try {
         int i = jTable2.getSelectedRow();
         TableModel model = jTable2.getModel();
         
       
-        String ma= bmc.showMsv(i) ;
+        String ma= svmsList.get(i).getMa_sv();
         input_ma.setText(ma);
 
-        String ms = bmc.showMs(i);
+        String ms = svmsList.get(i).getMa_sach();
         input_ms.setText(ms);
 
         input_ngay_muon.setText(model.getValueAt(i,2).toString());
         
-        input_ngay_tra.setText(model.getValueAt(i,3).toString());
-             
+        input_ngay_tra.setText(model.getValueAt(i,3).toString()); 
         
         }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, e);
+        catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex);
        }
-    }//GEN-LAST:event_jTable2MouseClicked
-
+        }
+       });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_add;

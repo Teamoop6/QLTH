@@ -230,7 +230,7 @@ public class TeacherModuleView extends javax.swing.JFrame {
     }
     private void btn_backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_backMouseClicked
         // TODO add your handling code here:
-       tmc.backSubmit();
+      // tmc.backSubmit();
        dispose();
     }//GEN-LAST:event_btn_backMouseClicked
 

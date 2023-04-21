@@ -4,11 +4,19 @@
  */
 package Model;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author toanc
  */
 public class BangDiem {
+    private ArrayList<BangDiem> bdList ;
     private static int count = 1;
     private int id;
     private String msv ;
@@ -27,7 +35,9 @@ public class BangDiem {
         this.KTVXL = KTVXL;
         count++;
     }
-
+    public BangDiem() {
+        
+    }
     public String getMsv() {
         return msv;
     }
@@ -92,6 +102,48 @@ public class BangDiem {
         this.DTB = DTB;
     }
     
-    
-   
+    // get the connection
+   public Connection getConnection()
+   {
+       Connection con;
+       try {
+           con = DriverManager.getConnection("jdbc:mysql://localhost/qlth", "root","team6oop");
+           return con;
+       } catch (Exception e) {
+           e.printStackTrace();
+           return null;
+       }
+   }
+  
+   // get a list of users from mysql database
+   public ArrayList<BangDiem> getBangDiemtsList()
+   {
+       ArrayList<BangDiem> BangDiemsList = new ArrayList<BangDiem>();
+       Connection connection = getConnection();
+       
+       String query = "SELECT * FROM  `bang diem` ";
+       Statement st;
+       ResultSet rs;
+       
+       try {
+           st = connection.createStatement();
+           rs = st.executeQuery(query);
+           BangDiem.setCount(1);
+           BangDiem bd;
+           while(rs.next())
+           {
+               // tao mot object lay du lieu tu sql
+               bd = new BangDiem(rs.getString("Ma_Sinh_Vien"),rs.getDouble("OOP"),rs.getDouble("CNPM"),rs.getDouble("C++"),rs.getDouble("KTVXL"));
+               bd.setDTB(rs.getDouble("DTB"));
+               BangDiemsList.add(bd);
+           }
+       } catch (Exception e) {
+           JOptionPane.showMessageDialog(null, e);
+       }
+       return BangDiemsList;
+   }
+    public void UpdateArrayBangDiem() {
+       // mảng bangdiem = list
+        bdList = getBangDiemtsList() ;
+   }
 }
