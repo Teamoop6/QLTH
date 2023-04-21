@@ -64,8 +64,4 @@ public class Student extends Person{
        return StudentsList;
    }
    
-    public void backSubmit() {
-        WelcomeView wc = new WelcomeView();
-        new WelcomeController(wc);
-    }
 }
