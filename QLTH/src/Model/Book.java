@@ -16,7 +16,6 @@ import javax.swing.JOptionPane;
  * @author toanc
  */
 public class Book extends User{
-    private ArrayList<Book> bookList ;
     private String tac_gia ;
     private int gia ;
     
@@ -85,9 +84,4 @@ public class Book extends User{
        return BooksList;
    }
    
-     // Update Array Book
-   public void UpdateArrayBook() {
-       // mảng bangdiem = list
-        bookList = getBooksList() ;
-   }
 }

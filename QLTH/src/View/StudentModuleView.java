@@ -278,9 +278,15 @@ public class StudentModuleView extends javax.swing.JFrame {
         btn_edit.addActionListener((e) -> {
         for(Student stu : stuList) {
             if(input_id.getText().equals(stu.getId())) {
+              if(input_name.getText().equals(stu.getName()) && input_phone.getText().equals(stu.getSdt()) && input_address.getText().equals(stu.getDia_Chi())) {
+                  this.resetText();
+                  JOptionPane.showMessageDialog(null, "Xin vui lòng nhập dữ liệu mới để hệ thống cập nhật .");
+                  return ;
+              }
               stu.setName(input_name.getText());
               stu.setSdt(input_phone.getText());
               stu.setDia_Chi(input_address.getText());
+              this.resetText();
               String query = "UPDATE `sinh vien` SET `Ten`='"+stu.getName()+"',`So_Dien_Thoai`='"+stu.getSdt()+"',`Dia_Chi`='"+stu.getDia_Chi()+"' WHERE Ma_Sinh_Vien = '"+stu.getId()+"'";
               executeSQlQuery(stuList,query, "Updated");
               break;
@@ -294,12 +300,20 @@ public class StudentModuleView extends javax.swing.JFrame {
         for(Student stu : stuList) {
             if(input_id.getText().equals(stu.getId())) {
               stuList.remove(stu);
-              String query = "DELETE FROM `sinh vien` WHERE Ma_Sinh_Vien = '"+input_id.getText()+"'";      
+              this.resetText();
+              String query = "DELETE FROM `sinh vien` WHERE Ma_Sinh_Vien = '"+stu.getId()+"'";      
               executeSQlQuery(stuList,query, "Deleted"); 
               break;
             }
         }
         });  
+    }
+    
+    private void resetText() {
+        input_id.setText("");
+        input_name.setText("");
+        input_phone.setText("");
+        input_address.setText("");
     }
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:

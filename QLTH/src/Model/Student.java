@@ -20,7 +20,6 @@ import javax.swing.JOptionPane;
  */
 public class Student extends Person{
     
-    private ArrayList<Student> stuList ;
     public Student(String Id,String Name,String Sdt,String Dia_Chi) {
         super(Id,Name,Sdt,Dia_Chi);
     }
@@ -64,12 +63,6 @@ public class Student extends Person{
        }
        return StudentsList;
    }
-    
-   // Update Array Student
-   public void UpdateArrayStudent() {
-       // mảng student = list
-        stuList = getStudentsList() ;
-   } 
    
     public void backSubmit() {
         WelcomeView wc = new WelcomeView();

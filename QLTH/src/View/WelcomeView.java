@@ -121,6 +121,7 @@ public class WelcomeView extends javax.swing.JFrame {
           Student st = new Student();
           StudentModuleView sv = new StudentModuleView();
           StudentModuleController smc = new StudentModuleController(st,sv);
+          dispose();
         });
     }
     
@@ -129,7 +130,9 @@ public class WelcomeView extends javax.swing.JFrame {
         BangDiem bd = new BangDiem();
         BangDiemModuleView bmv = new  BangDiemModuleView();
         BangDiemModuleController bdm = new BangDiemModuleController(bd,bmv);
+        dispose();
         });
+        
     }
     
     public void BookModuleView() {
@@ -137,12 +140,13 @@ public class WelcomeView extends javax.swing.JFrame {
         Book bk = new Book();
         BookModuleView bmv = new  BookModuleView();
         BookModuleController bmc = new BookModuleController(bk,bmv);
+        dispose();
         });
     }
     private void button_logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_logoutMouseClicked
         // TODO add your handling code here:
-        LoginPageController lpc = new LoginPageController() ;
-        LoginPageView lpv = new LoginPageView(lpc);
+        LoginPageView lpv = new LoginPageView() ;
+        LoginPageController lgc = new LoginPageController(lpv) ;
         dispose();
     }//GEN-LAST:event_button_logoutMouseClicked
 

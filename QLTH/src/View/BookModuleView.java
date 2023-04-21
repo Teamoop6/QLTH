@@ -442,11 +442,13 @@ public class BookModuleView extends javax.swing.JFrame {
            for(Book bk : bookList) {
                if(bk.getId().equals(svmsList.get(i).getMa_sach())) {      
                  row[0] = bk.getName();
+                 break ;
            }
            }
            for(Student stu : stuList) {
                if(stu.getId().equals(svmsList.get(i).getMa_sv())) {
                  row[1] = stu.getName();
+                 break;
            }
            }
            row[2] = svmsList.get(i).getNgay_muon();
@@ -469,35 +471,46 @@ public class BookModuleView extends javax.swing.JFrame {
         btn_edit.addActionListener((e) -> {
           for(Book bk : bookList) {
             if(input_id.getText().equals(bk.getId())) {
+              if(input_name.getText().equals(bk.getName()) && input_tac_gia.getText().equals(bk.getTac_gia()) && Integer.parseInt(input_gia.getText()) == bk.getGia()) {
+                 this.resetText();
+                  JOptionPane.showMessageDialog(null, "Xin vui lòng nhập dữ liệu mới để hệ thống cập nhật .");
+                  return ;
+              }
               bk.setName(input_name.getText());
               bk.setTac_gia(input_tac_gia.getText());
               bk.setGia(Integer.parseInt(input_gia.getText()));
+              this.resetText();
               String query = "UPDATE `sach` SET `Ten`='"+bk.getName()+"',`Tac_Gia`='"+bk.getTac_gia()+"',`Gia`='"+bk.getGia()+"' WHERE Ma_Sach = '"+bk.getId()+"'";
               executeSQlQuery1(bookList,query, "Updated");
               break;
             }
           }
         });         
-    }
-    
-    
+    }  
    public void deleteBook(ArrayList<Book> bookList) {
         btn_delete.addActionListener((e) -> {
         for(Book bk : bookList) {
             if(input_id.getText().equals(bk.getId())) {
               bookList.remove(bk);
-              String query = "DELETE FROM `sach` WHERE Ma_Sach = '"+input_id.getText()+"'";  
+              this.resetText();
+              String query = "DELETE FROM `sach` WHERE Ma_Sach = '"+bk.getId()+"'";  
               executeSQlQuery1(bookList,query, "Deleted"); 
               break;
             }
         } 
      }); 
     }
-   
+    private void resetText() {
+        input_id.setText("");
+        input_name.setText("");
+        input_tac_gia.setText("");
+        input_gia.setText("");
+    }
    public void addSvmsBook(ArrayList<Svms> svmsList,ArrayList<Book> bookList,ArrayList<Student> stuList){
        btn_add1.addActionListener((e) -> {
-        Svms svm = new Svms(input_ma.getText(), input_ms.getText(), input_ngay_muon.getText(), input_ngay_tra.getText());
-        String query = "INSERT INTO `SV MUON SACH`(`Ma_Sinh_Vien`, `Ma_Sach`, `Ngay_Muon`, `Ngay_Tra` ) VALUES ('"+input_ma.getText()+"','"+input_ms.getText()+"','"+input_ngay_muon.getText()+"','"+input_ngay_tra.getText()+"')";
+        Svms svms = new Svms(input_ma.getText(), input_ms.getText(), input_ngay_muon.getText(), input_ngay_tra.getText());
+        svmsList.add(svms);
+        String query = "INSERT INTO `SV MUON SACH`(`Ma_Sinh_Vien`, `Ma_Sach`, `Ngay_Muon`, `Ngay_Tra` ) VALUES ('"+svms.getMa_sv()+"','"+svms.getMa_sach()+"','"+svms.getNgay_muon()+"','"+svms.getNgay_tra()+"')";
         executeSQlQuery2(svmsList,bookList,stuList,query, "Inserted");
        });
     }
@@ -505,9 +518,15 @@ public class BookModuleView extends javax.swing.JFrame {
        btn_edit1.addActionListener((e) -> {
         for(Svms svms : svmsList) {
             if(input_ma.getText().equals(svms.getMa_sv()) && input_ms.getText().equals(svms.getMa_sach())) {
+                if(input_ngay_muon.getText().equals(svms.getNgay_muon()) && input_ngay_tra.getText().equals(svms.getNgay_tra())) {
+                    this.resetTextMs();
+                    JOptionPane.showMessageDialog(null, "Xin vui lòng nhập dữ liệu mới để hệ thống cập nhật .");
+                    return ;
+                }
               svms.setNgay_muon(input_ngay_muon.getText());
               svms.setNgay_tra(input_ngay_tra.getText());
-              String query = "UPDATE `SV MUON SACH` SET `Ngay_Muon`='"+input_ngay_muon.getText()+"',`Ngay_Tra`='"+input_ngay_tra.getText()+"' WHERE Ma_Sinh_Vien = '"+input_ma.getText()+"' AND Ma_Sach = '"+input_ms.getText()+"'";
+              this.resetTextMs();
+              String query = "UPDATE `SV MUON SACH` SET `Ngay_Muon`='"+svms.getNgay_muon()+"',`Ngay_Tra`='"+svms.getNgay_tra()+"' WHERE Ma_Sinh_Vien = '"+svms.getMa_sv()+"' AND Ma_Sach = '"+svms.getMa_sach()+"'";
               executeSQlQuery2(svmsList,bookList,stuList,query, "Updated");
               break;
             }
@@ -520,7 +539,8 @@ public class BookModuleView extends javax.swing.JFrame {
         for(Svms svms : svmsList) {
             if(input_ma.getText().equals(svms.getMa_sv()) && input_ms.getText().equals(svms.getMa_sach())) {
               svmsList.remove(svms);
-              String query = "DELETE FROM `SV MUON SACH` WHERE Ma_Sach = '"+input_ms.getText()+"' AND Ma_Sinh_Vien = '"+input_ma.getText()+"'"; 
+              this.resetTextMs();
+              String query = "DELETE FROM `SV MUON SACH` WHERE Ma_Sach = '"+svms.getMa_sach()+"' AND Ma_Sinh_Vien = '"+svms.getMa_sv()+"'"; 
               executeSQlQuery2(svmsList,bookList,stuList,query,  "Deleted"); 
               break;
             }
@@ -557,7 +577,7 @@ public class BookModuleView extends javax.swing.JFrame {
         int index = jComboBox1.getSelectedIndex();
          if(index == 1) {
           tb2.setRowCount(0);
-          this.resetText();
+          this.resetTextMs();
         } 
         else if(index == 0){
           tb2.setRowCount(0);
@@ -566,7 +586,7 @@ public class BookModuleView extends javax.swing.JFrame {
       });
     }
     
-    private void resetText() {
+    private void resetTextMs() {
        input_ma.setText("");
        input_ms.setText("");
        input_ngay_muon.setText("");

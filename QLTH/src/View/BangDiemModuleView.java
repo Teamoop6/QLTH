@@ -295,13 +295,23 @@ public class BangDiemModuleView extends javax.swing.JFrame {
        btn_edit.addActionListener((e) -> {
         for(BangDiem bd : bdList) {
             if(input_msv.getText().equals(bd.getMsv())) {
-              bd.setOOP(Double.parseDouble(input_oop.getText()));
-              bd.setCNPM(Double.parseDouble(input_cnpm.getText()));
-              bd.setClt(Double.parseDouble(input_clt.getText()));
-              bd.setKTVXL(Double.parseDouble(input_ktvxl.getText()));
-              Double dtb = tinh_dtb(Double.parseDouble(input_oop.getText()),Double.parseDouble(input_cnpm.getText()),Double.parseDouble(input_clt.getText()),Double.parseDouble(input_ktvxl.getText()));
+              Double oop,cnpm,clt,ktvxl ;
+              oop = Double.parseDouble(input_oop.getText()) ;
+              cnpm = Double.parseDouble(input_cnpm.getText());
+              clt = Double.parseDouble(input_clt.getText());
+              ktvxl = Double.parseDouble(input_ktvxl.getText());
+              if( oop == bd.getOOP() && cnpm == bd.getCNPM() && clt == bd.getClt() && ktvxl == bd.getKTVXL()) {
+                   this.resetText();
+                   JOptionPane.showMessageDialog(null, "Xin vui lòng nhập dữ liệu mới để hệ thống cập nhật .");
+                    return ;
+              }
+              bd.setOOP(oop);
+              bd.setCNPM(cnpm);
+              bd.setClt(clt);
+              bd.setKTVXL(ktvxl); 
+              Double dtb = tinh_dtb(oop,cnpm,clt,ktvxl);
               bd.setDTB(dtb);
-              
+              this.resetText();
               String query = "UPDATE `bang diem` SET `OOP`='"+bd.getOOP()+"',`CNPM`='"+bd.getCNPM()+"',`C++`='"+bd.getClt()+"',`KTVXL`='"+bd.getKTVXL()+"',`DTB`='"+bd.getDTB()+"' WHERE Ma_Sinh_Vien = '"+bd.getMsv()+"'";
               executeSQlQuery(bdList,stuList,query, "Updated");
               break;
@@ -309,19 +319,28 @@ public class BangDiemModuleView extends javax.swing.JFrame {
         }       
          });  
     }
-   
+    
+    private void resetText() {
+        input_msv.setText("");
+        input_oop.setText("");
+        input_cnpm.setText("");     
+        input_clt.setText("");
+        input_ktvxl.setText("");
+    }
     public void deleteBangDiem(ArrayList<BangDiem> bdList,ArrayList<Student> stuList) {
        btn_delete.addActionListener((e) -> {
         for(BangDiem bd : bdList) {
             if(input_msv.getText().equals(bd.getMsv())) {
               bdList.remove(bd);
               BangDiem.setCount(BangDiem.getCount()-1);
-              String query = "DELETE FROM `bang diem` WHERE Ma_Sinh_Vien = '"+input_msv.getText()+"'";      
+              this.resetText();
+              String query = "DELETE FROM `bang diem` WHERE Ma_Sinh_Vien = '"+bd.getMsv()+"'";      
               executeSQlQuery(bdList,stuList,query, "Deleted");
               break;
             }
-        }
+        } 
         });
+       
     }
     
     public void chonHang(ArrayList<BangDiem> bdList) {

@@ -5,7 +5,6 @@
 package View;
 
 import Controller.LoginPageController;
-import Controller.WelcomeController;
 
 /**
  *
@@ -15,7 +14,7 @@ public class MVCQLTH {
     public static void main(String[] args) {
     // creat view and add view to controller of 
     // loginpage controller
-    LoginPageController lgc = new LoginPageController() ;
-    LoginPageView view = new LoginPageView(lgc) ;
+    LoginPageView lpv = new LoginPageView() ;
+    LoginPageController lgc = new LoginPageController(lpv) ;
     }
 }
