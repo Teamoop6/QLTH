@@ -5,7 +5,13 @@
  */
 package View;
 
-import Controller.StudentModuleController;
+import Controller.WelcomeController;
+import Model.Student;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -18,19 +24,13 @@ public class StudentModuleView extends javax.swing.JFrame {
     /**
      * Creates new form studentsmodule
      */
-    
-    private DefaultTableModel tb ; 
-    private StudentModuleController smc ;
-    public StudentModuleView(StudentModuleController smc) {
-        this.smc = smc ;
+    private DefaultTableModel tb  ;
+    public StudentModuleView() {
         initComponents();
-        this.setVisible(true);
+        this.setVisible(true);     
         // hiển thị dữ liệu sinh viên ra bảng
-        this.Show_Users_In_JTable();
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -84,25 +84,10 @@ public class StudentModuleView extends javax.swing.JFrame {
         jLabel5.setText("Address :");
 
         btn_add.setText("Add");
-        btn_add.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_addActionPerformed(evt);
-            }
-        });
 
         btn_edit.setText("Edit");
-        btn_edit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_editActionPerformed(evt);
-            }
-        });
 
         btn_delete.setText("Delete");
-        btn_delete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_deleteActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -219,32 +204,103 @@ public class StudentModuleView extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
-    private void Show_Users_In_JTable() {
-        tb = (DefaultTableModel) jTable1.getModel() ;
-        smc.Show_Users_In_JTable(tb, jTable1);
+   // get the connection
+   private Connection getConnection()
+   {
+       Connection con;
+       try {
+           con = DriverManager.getConnection("jdbc:mysql://localhost/qlth", "root","team6oop");
+           return con;
+       } catch (Exception e) {
+           e.printStackTrace();
+           return null;
+       }
+   }
+
+   // Execute The Insert Update And Delete Querys
+   private void executeSQlQuery(ArrayList<Student> stuList,String query, String message)
+   {
+       Connection con = getConnection();
+       Statement st;
+       try{
+           st = con.createStatement();
+           
+           // thực thi câu lệnh truy vấn
+           if((st.executeUpdate(query)) == 1)
+           {
+               // refresh jtable data
+               tb.setRowCount(0);
+               Show_Users_In_JTable(stuList);
+               
+               JOptionPane.showMessageDialog(null, "Data "+message+" Succefully");
+           }else{
+               JOptionPane.showMessageDialog(null, "Data Not "+message);
+           }
+       }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+       }
+   } 
+    // Display Data In JTable
+   public void Show_Users_In_JTable(ArrayList<Student> stuList)
+   {
+       tb = (DefaultTableModel) jTable1.getModel();
+       Object[] row = new Object[4];
+       for(int i = 0; i < stuList.size(); i++)
+       {
+           row[0] = stuList.get(i).getId();
+           row[1] = stuList.get(i).getName();
+           row[2] = stuList.get(i).getSdt();
+           row[3] = stuList.get(i).getDia_Chi();
+           tb.addRow(row);
+       }
     }
+   
+
     private void btn_backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_backMouseClicked
         // TODO add your handling code here:
-       smc.backSubmit(smc);
+       WelcomeView wv = new WelcomeView();
+       WelcomeController wc = new WelcomeController(wv);
        dispose();
     }//GEN-LAST:event_btn_backMouseClicked
-
-    private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-        // TODO add your handling code here:
-       smc.addStudent(tb, jTable1, input_id.getText(), input_name.getText(), input_phone.getText(), input_address.getText());
-    }//GEN-LAST:event_btn_addActionPerformed
-
-    private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
-        // TODO add your handling code here:
-       smc.editStudent(tb, jTable1, input_id.getText(), input_name.getText(), input_phone.getText(), input_address.getText());
-    }//GEN-LAST:event_btn_editActionPerformed
-
-    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
-        // TODO add your handling code here:
-       smc.deleteStudent(tb, jTable1, input_id.getText(), input_name.getText(), input_phone.getText(), input_address.getText());
-    }//GEN-LAST:event_btn_deleteActionPerformed
-
+    
+    public void addStudentView(ArrayList<Student> stuList) {
+        btn_add.addActionListener((e) -> {
+        Student stu = new Student(input_id.getText(), input_name.getText(), input_phone.getText(), input_address.getText());
+        stuList.add(stu);
+        // lay du lieu de hien thi
+        String query = "INSERT INTO `sinh vien`(`Ma_Sinh_Vien`, `Ten`, `So_Dien_Thoai`, `Dia_Chi` ) VALUES ('"+stu.getId()+"','"+stu.getName()+"','"+stu.getSdt()+"','"+stu.getDia_Chi()+"')";
+        executeSQlQuery(stuList,query, "Inserted");
+        });
+        
+    }
+    
+    public void editStudentView(ArrayList<Student> stuList) {
+        btn_edit.addActionListener((e) -> {
+        for(Student stu : stuList) {
+            if(input_id.getText().equals(stu.getId())) {
+              stu.setName(input_name.getText());
+              stu.setSdt(input_phone.getText());
+              stu.setDia_Chi(input_address.getText());
+              String query = "UPDATE `sinh vien` SET `Ten`='"+stu.getName()+"',`So_Dien_Thoai`='"+stu.getSdt()+"',`Dia_Chi`='"+stu.getDia_Chi()+"' WHERE Ma_Sinh_Vien = '"+stu.getId()+"'";
+              executeSQlQuery(stuList,query, "Updated");
+              break;
+            }
+        }
+        });  
+    }
+    
+    public void deleteStudentView(ArrayList<Student> stuList) {
+        btn_delete.addActionListener((e) -> {
+        for(Student stu : stuList) {
+            if(input_id.getText().equals(stu.getId())) {
+              stuList.remove(stu);
+              String query = "DELETE FROM `sinh vien` WHERE Ma_Sinh_Vien = '"+input_id.getText()+"'";      
+              executeSQlQuery(stuList,query, "Deleted"); 
+              break;
+            }
+        }
+        });  
+    }
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         // Get The Index Of The Slected Row 
@@ -262,7 +318,7 @@ public class StudentModuleView extends javax.swing.JFrame {
         input_address.setText(model.getValueAt(i,3).toString());
     }//GEN-LAST:event_jTable1MouseClicked
 
-
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_add;
     private javax.swing.JLabel btn_back;

@@ -4,6 +4,9 @@
  */
 package Model;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+
 /**
  *
  * @author toanc
@@ -46,5 +49,18 @@ public class ms {
         this.ngay_tra = ngay_tra;
     }
     
-    
+   // get the connection
+   public Connection getConnection()
+   {
+       Connection con;
+       try {
+           con = DriverManager.getConnection("jdbc:mysql://localhost/qlth", "root","team6oop");
+           return con;
+       } catch (Exception e) {
+           e.printStackTrace();
+           return null;
+       }
+   }
+   
+   
 }

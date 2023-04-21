@@ -89,17 +89,11 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="STUDENT TRANSCRIPT&apos;S MODULE"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_tsActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="bt_teacher">
       <Properties>
         <Property name="text" type="java.lang.String" value="TEACHER&apos;S MODULE"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_teacherActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="button_logout">
       <Properties>
@@ -119,17 +113,11 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="STUDENT&apos;S MODULE"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_stActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="bt_book">
       <Properties>
         <Property name="text" type="java.lang.String" value="BOOK&apos;S MODULE"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_bookActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

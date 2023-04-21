@@ -5,7 +5,15 @@
  */
 package View;
 
-import Controller.BangDiemModuleController;
+import Controller.WelcomeController;
+import Model.BangDiem;
+import Model.Student;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -15,23 +23,13 @@ import javax.swing.table.TableModel;
  * @author dell
  */
 public class BangDiemModuleView extends javax.swing.JFrame {
-
-    /**
-     * Creates new form studentsmodule
-     */
     
     private DefaultTableModel tb ; 
-    private BangDiemModuleController bdc ;
-    public BangDiemModuleView(BangDiemModuleController bdc) {
-        this.bdc = bdc ;
+    public BangDiemModuleView() {
         initComponents();
         this.setVisible(true);
-        this.bdc.UpdateArrayBangDiem();
-        this.Show_Users_In_JTable();
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -83,25 +81,10 @@ public class BangDiemModuleView extends javax.swing.JFrame {
         jLabel5.setText("CNPM");
 
         btn_add.setText("Add");
-        btn_add.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_addActionPerformed(evt);
-            }
-        });
 
         btn_edit.setText("Edit");
-        btn_edit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_editActionPerformed(evt);
-            }
-        });
 
         btn_delete.setText("Delete");
-        btn_delete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_deleteActionPerformed(evt);
-            }
-        });
 
         jLabel6.setText("C++");
 
@@ -181,11 +164,6 @@ public class BangDiemModuleView extends javax.swing.JFrame {
             }
         ));
         jTable1.setRequestFocusEnabled(false);
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setPreferredWidth(20);
@@ -232,43 +210,133 @@ public class BangDiemModuleView extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
-    private void Show_Users_In_JTable() {
-        tb = (DefaultTableModel) jTable1.getModel() ;
-        bdc.Show_Users_In_JTable(tb, jTable1);
+     private Connection getConnection()
+   {
+       Connection con;
+       try {
+           con = DriverManager.getConnection("jdbc:mysql://localhost/qlth", "root","team6oop");
+           return con;
+       } catch (Exception e) {
+           e.printStackTrace();
+           return null;
+       }
+   }
+   
+   // Execute The Insert Update And Delete Querys
+   private void executeSQlQuery(ArrayList<BangDiem> bdList,ArrayList<Student> stuList,String query, String message)
+   {
+       Connection con = getConnection();
+       Statement st;
+       try{
+           st = con.createStatement();
+           
+           // thực thi câu lệnh truy vấn
+           if((st.executeUpdate(query)) == 1)
+           {
+               // refresh jtable data
+               tb.setRowCount(0);
+               Show_Users_In_JTable(bdList,stuList);
+               
+               JOptionPane.showMessageDialog(null, "Data "+message+" Succefully");
+           }else{
+               JOptionPane.showMessageDialog(null, "Data Not "+message);
+           }
+       }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+       }
+   } 
+   
+    // Display Data In JTable
+   public void Show_Users_In_JTable(ArrayList<BangDiem> bdList,ArrayList<Student> stuList)
+   {
+       tb = (DefaultTableModel) jTable1.getModel();
+       Object[] row = new Object[7];
+       for(int i = 0; i < bdList.size(); i++)
+       {
+           row[0] = bdList.get(i).getId();
+           for(Student stu : stuList) {
+               if(stu.getId().equals(bdList.get(i).getMsv())) {
+                 row[1] = stu.getName();
+           }
+           }
+           row[2] = bdList.get(i).getOOP();
+           row[3] = bdList.get(i).getCNPM();
+           row[4] = bdList.get(i).getClt();
+           row[5] = bdList.get(i).getKTVXL();
+           row[6] = bdList.get(i).getDTB();
+           tb.addRow(row);
+       }
     }
+   
     private void btn_backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_backMouseClicked
         // TODO add your handling code here:
-       bdc.backSubmit();
+       WelcomeView wv = new WelcomeView();
+       WelcomeController wc = new WelcomeController(wv);
        dispose();
     }//GEN-LAST:event_btn_backMouseClicked
-
-    private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-        // TODO add your handling code here:
-       bdc.addBangDiem(tb, jTable1, input_msv.getText(), input_oop.getText(), input_cnpm.getText(), input_clt.getText(),input_ktvxl.getText());
-    }//GEN-LAST:event_btn_addActionPerformed
-
-    private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
-        // TODO add your handling code here:
-       bdc.editBangDiem(tb, jTable1, input_msv.getText(), input_oop.getText(), input_cnpm.getText(), input_clt.getText(),input_ktvxl.getText());
-    }//GEN-LAST:event_btn_editActionPerformed
-
-    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
-        // TODO add your handling code here:
-       bdc.deleteStudent(tb, jTable1, input_msv.getText(), input_oop.getText(), input_cnpm.getText(), input_clt.getText(),input_ktvxl.getText());
-    }//GEN-LAST:event_btn_deleteActionPerformed
-
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        // TODO add your handling code here:
-        // Get The Index Of The Slected Row 
-        try {
+    
+    public void addBangDiem(ArrayList<BangDiem> bdList,ArrayList<Student> stuList) {
+        btn_add.addActionListener((e) -> {
+        BangDiem bd = new BangDiem(input_msv.getText(),Double.parseDouble(input_oop.getText()),Double.parseDouble(input_cnpm.getText()),Double.parseDouble(input_clt.getText()),Double.parseDouble(input_ktvxl.getText()));
+        Double dtb = tinh_dtb(Double.parseDouble(input_oop.getText()),Double.parseDouble(input_cnpm.getText()),Double.parseDouble(input_clt.getText()),Double.parseDouble(input_ktvxl.getText()));
+        bd.setDTB(dtb);
+        bdList.add(bd);
+        String query = "INSERT INTO `bang diem`(`Id` , `Ma_Sinh_Vien`, `OOP`, `CNPM`, `C++`, `KTVXL` ,`DTB`) VALUES ('"+bd.getId()+"','"+bd.getMsv()+"','"+bd.getOOP()+"','"+bd.getCNPM()+"','"+bd.getClt()+"','"+bd.getKTVXL()+"','"+bd.getDTB()+"')";
+        executeSQlQuery(bdList,stuList,query, "Inserted");
+        });
+    }
+    
+    public Double tinh_dtb(Double a,Double b,Double c,Double d) {
+       Double dtb = (a+b+c+d)/4;
+       return dtb;
+   }
+    
+   public void editBangDiem(ArrayList<BangDiem> bdList,ArrayList<Student> stuList) {
+       btn_edit.addActionListener((e) -> {
+        for(BangDiem bd : bdList) {
+            if(input_msv.getText().equals(bd.getMsv())) {
+              bd.setOOP(Double.parseDouble(input_oop.getText()));
+              bd.setCNPM(Double.parseDouble(input_cnpm.getText()));
+              bd.setClt(Double.parseDouble(input_clt.getText()));
+              bd.setKTVXL(Double.parseDouble(input_ktvxl.getText()));
+              Double dtb = tinh_dtb(Double.parseDouble(input_oop.getText()),Double.parseDouble(input_cnpm.getText()),Double.parseDouble(input_clt.getText()),Double.parseDouble(input_ktvxl.getText()));
+              bd.setDTB(dtb);
+              
+              String query = "UPDATE `bang diem` SET `OOP`='"+bd.getOOP()+"',`CNPM`='"+bd.getCNPM()+"',`C++`='"+bd.getClt()+"',`KTVXL`='"+bd.getKTVXL()+"',`DTB`='"+bd.getDTB()+"' WHERE Ma_Sinh_Vien = '"+bd.getMsv()+"'";
+              executeSQlQuery(bdList,stuList,query, "Updated");
+              break;
+            }
+        }       
+         });  
+    }
+   
+    public void deleteBangDiem(ArrayList<BangDiem> bdList,ArrayList<Student> stuList) {
+       btn_delete.addActionListener((e) -> {
+        for(BangDiem bd : bdList) {
+            if(input_msv.getText().equals(bd.getMsv())) {
+              bdList.remove(bd);
+              BangDiem.setCount(BangDiem.getCount()-1);
+              String query = "DELETE FROM `bang diem` WHERE Ma_Sinh_Vien = '"+input_msv.getText()+"'";      
+              executeSQlQuery(bdList,stuList,query, "Deleted");
+              break;
+            }
+        }
+        });
+    }
+    
+    public void chonHang(ArrayList<BangDiem> bdList) {
+        jTable1.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            // TODO add your handling code here:
+      try {
         int i = jTable1.getSelectedRow();
         TableModel model = jTable1.getModel();
         
          // Display Slected Row In JTexteFields
         //input_id.setText(model.getValueAt(i,0).toString());
         String text = model.getValueAt(i,0).toString() ;      
-        String text_msv = bdc.showRows(text) ;
+        String text_msv = bdList.get(Integer.parseInt(text)-1).getMsv();
         input_msv.setText(text_msv);
 
         input_oop.setText(model.getValueAt(i,2).toString());
@@ -281,11 +349,14 @@ public class BangDiemModuleView extends javax.swing.JFrame {
         
         
         }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, e);
+        catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex);
        }
-    }//GEN-LAST:event_jTable1MouseClicked
-
+        }
+      });
+         
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_add;

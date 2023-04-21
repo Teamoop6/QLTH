@@ -5,6 +5,7 @@
 package View;
 
 import Controller.LoginPageController;
+import Controller.WelcomeController;
 
 /**
  *

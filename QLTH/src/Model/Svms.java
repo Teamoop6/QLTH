@@ -4,12 +4,18 @@
  */
 package Model;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author toanc
  */
 public class Svms extends ms{
-    
+    private ArrayList<Svms> svmsList ;
     private String ma_sv ;
     public Svms(String ma_sv,String ma_sach,String ngay_muon,String ngay_tra) {
         super(ma_sach,ngay_muon,ngay_tra);
@@ -27,5 +33,33 @@ public class Svms extends ms{
         this.ma_sv = ma_sv;
     }
     
+    public ArrayList<Svms> getSvmsList()
+   {
+       ArrayList<Svms> svmsList = new ArrayList<Svms>();
+       Connection connection = getConnection();
+       
+       String query = "SELECT * FROM  `SV MUON SACH` ";
+       Statement st;
+       ResultSet rs;
+       
+       try {
+           st = connection.createStatement();
+           rs = st.executeQuery(query);
+           Svms svm;
+           while(rs.next())
+           {
+               // tao mot object lay du lieu tu sql
+               svm = new Svms(rs.getString("Ma_Sinh_Vien"),rs.getString("Ma_Sach"),rs.getString("Ngay_Muon"),rs.getString("Ngay_Tra"));
+               svmsList.add(svm);
+           }
+       } catch (Exception e) {
+           JOptionPane.showMessageDialog(null, e);
+       }
+       return svmsList;
+   }
+    
+   public void UpdateArraySvmsBook() {
+       svmsList = getSvmsList();
+   }
     
 }

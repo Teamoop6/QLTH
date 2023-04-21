@@ -5,7 +5,13 @@
  */
 package View;
 
-import Controller.WelcomeController;
+import Controller.BangDiemModuleController;
+import Controller.BookModuleController;
+import Controller.LoginPageController;
+import Controller.StudentModuleController;
+import Model.BangDiem;
+import Model.Student;
+import Model.Book;
 
 /**
  *
@@ -17,9 +23,8 @@ public class WelcomeView extends javax.swing.JFrame {
      * Creates new form welcome
      */
     
-    private WelcomeController wc ;
-    public WelcomeView(WelcomeController wc) {
-        this.wc = wc ;
+    
+    public WelcomeView() {
         initComponents();
         this.setVisible(true);
     }
@@ -47,18 +52,8 @@ public class WelcomeView extends javax.swing.JFrame {
         jLabel1.setText("Menu Page");
 
         bt_ts.setText("STUDENT TRANSCRIPT'S MODULE");
-        bt_ts.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_tsActionPerformed(evt);
-            }
-        });
 
         bt_teacher.setText("TEACHER'S MODULE");
-        bt_teacher.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_teacherActionPerformed(evt);
-            }
-        });
 
         button_logout.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         button_logout.setForeground(new java.awt.Color(255, 0, 0));
@@ -70,18 +65,8 @@ public class WelcomeView extends javax.swing.JFrame {
         });
 
         bt_st.setText("STUDENT'S MODULE");
-        bt_st.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_stActionPerformed(evt);
-            }
-        });
 
         bt_book.setText("BOOK'S MODULE");
-        bt_book.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_bookActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,40 +116,36 @@ public class WelcomeView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bt_bookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_bookActionPerformed
-        // TODO add your handling code here:
-        wc.BookModuleSubmit();
-        dispose();
-    }//GEN-LAST:event_bt_bookActionPerformed
-
-    private void bt_tsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_tsActionPerformed
-        // TODO add your handling code here:
-        wc.BangDiemModuleSubmit();
-        dispose();
-    }//GEN-LAST:event_bt_tsActionPerformed
-
-    private void bt_teacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_teacherActionPerformed
-        // TODO add your handling code here:
-         wc.TeacherModuleSubmit();
-        dispose();
-    }//GEN-LAST:event_bt_teacherActionPerformed
-
+    public void StudentModuleView(){
+        bt_st.addActionListener((e) -> {
+          Student st = new Student();
+          StudentModuleView sv = new StudentModuleView();
+          StudentModuleController smc = new StudentModuleController(st,sv);
+        });
+    }
+    
+    public void BangDiemModuleView(){
+        bt_ts.addActionListener((e) -> {
+        BangDiem bd = new BangDiem();
+        BangDiemModuleView bmv = new  BangDiemModuleView();
+        BangDiemModuleController bdm = new BangDiemModuleController(bd,bmv);
+        });
+    }
+    
+    public void BookModuleView() {
+        bt_book.addActionListener((e) -> {
+        Book bk = new Book();
+        BookModuleView bmv = new  BookModuleView();
+        BookModuleController bmc = new BookModuleController(bk,bmv);
+        });
+    }
     private void button_logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_logoutMouseClicked
         // TODO add your handling code here:
-        wc.logOut();
-        // thoat chuong trinh dang hien
+        LoginPageController lpc = new LoginPageController() ;
+        LoginPageView lpv = new LoginPageView(lpc);
         dispose();
     }//GEN-LAST:event_button_logoutMouseClicked
-   
-//GEN-FIRST:event_bt_stActionPerformed
- 
-//GEN-LAST:event_bt_stActionPerformed
-    // hiển thị giao diện student module
-    private void bt_stActionPerformed(java.awt.event.ActionEvent evt) {                                      
-        // TODO add your handling code here:
-        wc.StudentModuleSubmit();
-        dispose();
-    }  
+
     /**
      * @param args the command line arguments
      */
