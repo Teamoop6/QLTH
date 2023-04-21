@@ -5,7 +5,11 @@
  */
 package View;
 
-import Controller.LoginPageController;
+import Controller.WelcomeController;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.swing.JOptionPane;
 
@@ -19,12 +23,9 @@ public class LoginPageView extends javax.swing.JFrame {
      * Creates new form LoginPage
      */
     
-    // tạo biến object controller
-    private LoginPageController lpc ;
     
     // bỏ object vào biến và hiển thị màn hình
-    public LoginPageView(LoginPageController lpc) {
-        this.lpc = lpc ;
+    public LoginPageView() {
         initComponents();
         this.setVisible(true);
     }
@@ -69,22 +70,12 @@ public class LoginPageView extends javax.swing.JFrame {
         jLabel6.setText("Enter Secret Code:");
 
         button_submit.setText("Submit");
-        button_submit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_submitActionPerformed(evt);
-            }
-        });
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Logo_PTIT_University.png"))); // NOI18N
         jLabel7.setText("jLabel7");
         jLabel7.setToolTipText("");
 
         button_submit_secret.setText("submit");
-        button_submit_secret.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_submit_secretActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -166,38 +157,48 @@ public class LoginPageView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    // nút đăng nhập
-    private void button_submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_submitActionPerformed
-        // TODO add your handling code here:
-        try {
-            // dang nhap
-            String user = input_user.getText();
-            String pass = input_pass.getText();
-            lpc.SubmitLoginPage(user,pass);
+    // Chức năng đăng nhập 
+    public void SubmitLoginPage() {
+      button_submit.addActionListener((e) -> {
+         try{
+            // truy cập vào cơ sở dữ liệu
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn= (Connection) DriverManager.getConnection("jdbc:mysql://localhost/qlth","root","team6oop");
+            Statement st= (Statement)conn.createStatement();
+            String sql= "select * from user_login";
             
-            // check mat khau
-            String secret = input_sc.getText();
-            System.out.println(secret);
-            lpc.SubmitSecret(secret);
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(null, e);
+            // kiểm tra có phải là admin
+            ResultSet rs= st.executeQuery(sql);
+            while(rs.next()){
+            String username= rs.getString("username");
+            String Password= rs.getString("password");
+            
+            if(input_user.getText().equals(username) && input_pass.getText().equals(Password)){
+            // hien thi welcomeview
+             WelcomeView wv = new WelcomeView();
+             WelcomeController lpc = new WelcomeController(wv); 
+             dispose();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Username or Password is incorrect!");
+            }
+            }
         }
-    }//GEN-LAST:event_button_submitActionPerformed
-
-    
-    // nút check bảo mật
-    private void button_submit_secretActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_submit_secretActionPerformed
-        // TODO add your handling code here:
-        try {
-            // check mat khau
-            String secret = input_sc.getText();
-            lpc.SubmitSecret(secret);
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }//GEN-LAST:event_button_submit_secretActionPerformed
-
+        
+        catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Error while establishing connection");
+        } 
+      });
+    }
+    // Chức năng kiểm tra bảo mật
+    public void SubmitSecret() {
+        button_submit_secret.addActionListener((e) -> {
+         if(input_sc.getText().equals("admin@123")){
+              JOptionPane.showMessageDialog(null, "The username and password is 'admin'");
+        }   
+        }); 
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_submit;

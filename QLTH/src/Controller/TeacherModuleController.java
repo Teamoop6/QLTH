@@ -5,7 +5,6 @@
 package Controller;
 
 import Model.Teacher;
-import View.WelcomeView;
 import java.sql.Statement ;
 import java.sql.ResultSet ;
 import java.sql.Connection;

@@ -16,7 +16,6 @@ import javax.swing.JOptionPane;
  * @author toanc
  */
 public class BangDiem {
-    private ArrayList<BangDiem> bdList ;
     private static int count = 1;
     private int id;
     private String msv ;
@@ -141,9 +140,5 @@ public class BangDiem {
            JOptionPane.showMessageDialog(null, e);
        }
        return BangDiemsList;
-   }
-    public void UpdateArrayBangDiem() {
-       // mảng bangdiem = list
-        bdList = getBangDiemtsList() ;
    }
 }
