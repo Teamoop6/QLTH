@@ -9,9 +9,11 @@ import Controller.BangDiemModuleController;
 import Controller.BookModuleController;
 import Controller.LoginPageController;
 import Controller.StudentModuleController;
+import Controller.TeacherModuleController;
 import Model.BangDiem;
 import Model.Student;
 import Model.Book;
+import Model.Teacher;
 
 /**
  *
@@ -121,6 +123,14 @@ public class WelcomeView extends javax.swing.JFrame {
           Student st = new Student();
           StudentModuleView sv = new StudentModuleView();
           StudentModuleController smc = new StudentModuleController(st,sv);
+          dispose();
+        });
+    }
+     public void TeacherModuleView(){
+        bt_teacher.addActionListener((e) -> {
+          Teacher tt = new Teacher();
+          TeacherModuleView tmv = new TeacherModuleView();
+          TeacherModuleController tmc = new TeacherModuleController(tt,tmv);
           dispose();
         });
     }
