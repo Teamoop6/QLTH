@@ -5,7 +5,13 @@
  */
 package View;
 
-import Controller.TeacherModuleController;
+import Controller.WelcomeController;
+import Model.Teacher;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -18,18 +24,13 @@ public class TeacherModuleView extends javax.swing.JFrame {
     /**
      * Creates new form Teachersmodule
      */
-    
-    private DefaultTableModel tb ; 
-    private TeacherModuleController tmc ;
-    public TeacherModuleView(TeacherModuleController tmc) {
-        this.tmc = tmc ;
+    private DefaultTableModel tb  ;
+    public TeacherModuleView() {
         initComponents();
-        this.setVisible(true);
-        this.Show_Users_In_JTable();
+        this.setVisible(true);     
+        // hiển thị dữ liệu giao vien ra bảng
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -78,28 +79,15 @@ public class TeacherModuleView extends javax.swing.JFrame {
 
         jLabel4.setText("Phone :");
 
+        input_id.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+
         jLabel5.setText("Address :");
 
         btn_add.setText("Add");
-        btn_add.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_addActionPerformed(evt);
-            }
-        });
 
         btn_edit.setText("Edit");
-        btn_edit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_editActionPerformed(evt);
-            }
-        });
 
         btn_delete.setText("Delete");
-        btn_delete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_deleteActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -177,7 +165,7 @@ public class TeacherModuleView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(20);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(90);
             jTable1.getColumnModel().getColumn(1).setPreferredWidth(100);
         }
 
@@ -216,36 +204,117 @@ public class TeacherModuleView extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
-    private void Show_Users_In_JTable() {
-        tb = (DefaultTableModel) jTable1.getModel() ;
-        tmc.Show_Users_In_JTable(tb, jTable1);
+   // get the connection
+   private Connection getConnection()
+   {
+       Connection con;
+       try {
+           con = DriverManager.getConnection("jdbc:mysql://localhost/qlth", "root","team6oop");
+           return con;
+       } catch (Exception e) {
+           e.printStackTrace();
+           return null;
+       }
+   }
+
+   // Execute The Insert Update And Delete Querys
+   private void executeSQlQuery(ArrayList<Teacher> stuList,String query, String message)
+   {
+       Connection con = getConnection();
+       Statement st;
+       try{
+           st = con.createStatement();
+           
+           // thực thi câu lệnh truy vấn
+           if((st.executeUpdate(query)) == 1)
+           {
+               // refresh jtable data
+               tb.setRowCount(0);
+               Show_Users_In_JTable(stuList);
+               
+               JOptionPane.showMessageDialog(null, "Data "+message+" Succefully");
+           }else{
+               JOptionPane.showMessageDialog(null, "Data Not "+message);
+           }
+       }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+       }
+   } 
+    // Display Data In JTable
+   public void Show_Users_In_JTable(ArrayList<Teacher> teaList)
+   {
+       tb = (DefaultTableModel) jTable1.getModel();
+       Object[] row = new Object[4];
+       for(int i = 0; i < teaList.size(); i++)
+       {
+           row[0] = teaList.get(i).getId();
+           row[1] = teaList.get(i).getName();
+           row[2] = teaList.get(i).getSdt();
+           row[3] = teaList.get(i).getDia_Chi();
+           tb.addRow(row);
+       }
     }
+   
+
     private void btn_backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_backMouseClicked
         // TODO add your handling code here:
-      // tmc.backSubmit();
+       WelcomeView wv = new WelcomeView();
+       WelcomeController wc = new WelcomeController(wv);
        dispose();
     }//GEN-LAST:event_btn_backMouseClicked
-
-    private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-        // TODO add your handling code here:
-       String query = "INSERT INTO `giao vien`(`Ma_Giao_Vien`, `Ten`, `So_Dien_Thoai`, `Dia_Chi` ) VALUES ('"+input_id.getText()+"','"+input_name.getText()+"','"+input_phone.getText()+"','"+input_address.getText()+"')";
     
-       tmc.executeSQlQuery(tb,jTable1,query, "Inserted");
-    }//GEN-LAST:event_btn_addActionPerformed
-
-    private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
-        // TODO add your handling code here:
-       String query = "UPDATE `giao vien` SET `Ten`='"+input_name.getText()+"',`So_Dien_Thoai`='"+input_phone.getText()+"',`Dia_Chi`='"+input_address.getText()+"' WHERE Ma_Giao_Vien = '"+input_id.getText()+"'";
-       tmc.executeSQlQuery(tb,jTable1,query, "Updated");
-    }//GEN-LAST:event_btn_editActionPerformed
-
-    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
-        // TODO add your handling code here:
-       String query = "DELETE FROM `giao vien` WHERE Ma_Giao_Vien = "+input_id.getText();
-       tmc.executeSQlQuery(tb,jTable1,query, "Deleted");
-    }//GEN-LAST:event_btn_deleteActionPerformed
-
+    public void addTeacherView(ArrayList<Teacher> teaList) {
+        btn_add.addActionListener((e) -> {
+        Teacher tea = new Teacher(input_id.getText(), input_name.getText(), input_phone.getText(), input_address.getText());
+        teaList.add(tea);
+        // lay du lieu de hien thi
+        String query = "INSERT INTO `giao vien`(`Ma_Giao_Vien`, `Ten`, `So_Dien_Thoai`, `Dia_Chi` ) VALUES ('"+tea.getId()+"','"+tea.getName()+"','"+tea.getSdt()+"','"+tea.getDia_Chi()+"')";
+        executeSQlQuery(teaList,query, "Inserted");
+        });
+        
+    }
+    
+    public void editTeacherView(ArrayList<Teacher> teaList) {
+        btn_edit.addActionListener((e) -> {
+        for(Teacher tea : teaList) {
+            if(input_id.getText().equals(tea.getId())) {
+              if(input_name.getText().equals(tea.getName()) && input_phone.getText().equals(tea.getSdt()) && input_address.getText().equals(tea.getDia_Chi())) {
+                  this.resetText();
+                  JOptionPane.showMessageDialog(null, "Xin vui lòng nhập dữ liệu mới để hệ thống cập nhật .");
+                  return ;
+              }
+              tea.setName(input_name.getText());
+              tea.setSdt(input_phone.getText());
+              tea.setDia_Chi(input_address.getText());
+              this.resetText();
+              String query = "UPDATE `giao vien` SET `Ten`='"+tea.getName()+"',`So_Dien_Thoai`='"+tea.getSdt()+"',`Dia_Chi`='"+tea.getDia_Chi()+"' WHERE Ma_Giao_Vien = '"+tea.getId()+"'";
+              executeSQlQuery(teaList,query, "Updated");
+              break;
+            }
+        }
+        });  
+    }
+    
+    public void deleteTeacherView(ArrayList<Teacher> teaList) {
+        btn_delete.addActionListener((e) -> {
+        for(Teacher tea : teaList) {
+            if(input_id.getText().equals(tea.getId())) {
+              teaList.remove(tea);
+              this.resetText();
+              String query = "DELETE FROM `giao vien` WHERE Ma_Giao_Vien = '"+tea.getId()+"'";      
+              executeSQlQuery(teaList,query, "Deleted"); 
+              break;
+            }
+        }
+        });  
+    }
+    
+    private void resetText() {
+        input_id.setText("");
+        input_name.setText("");
+        input_phone.setText("");
+        input_address.setText("");
+    }
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         // Get The Index Of The Slected Row 
@@ -263,7 +332,7 @@ public class TeacherModuleView extends javax.swing.JFrame {
         input_address.setText(model.getValueAt(i,3).toString());
     }//GEN-LAST:event_jTable1MouseClicked
 
-
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_add;
     private javax.swing.JLabel btn_back;

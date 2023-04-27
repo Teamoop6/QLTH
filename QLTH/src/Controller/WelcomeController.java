@@ -17,14 +17,12 @@ public class WelcomeController {
    private WelcomeController wc ;
    public WelcomeController(WelcomeView wv) {
        this.wv = wv ;
+       this.wv.TeacherModuleView();
        this.wv.StudentModuleView();
        this.wv.BangDiemModuleView();
        this.wv.BookModuleView();
     }
 
-     public void TeacherModuleSubmit() {
-        TeacherModuleController tmc = new TeacherModuleController();
-        TeacherModuleView tmv = new TeacherModuleView(tmc);
-    }
+     
     
 }
