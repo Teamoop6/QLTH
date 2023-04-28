@@ -80,6 +80,11 @@ public class StudentModuleView extends javax.swing.JFrame {
         jLabel4.setText("Phone :");
 
         input_id.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        input_id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                input_idActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Address :");
 
@@ -274,6 +279,7 @@ public class StudentModuleView extends javax.swing.JFrame {
         
     }
     
+
     public void editStudentView(ArrayList<Student> stuList) {
         btn_edit.addActionListener((e) -> {
         for(Student stu : stuList) {
@@ -331,6 +337,10 @@ public class StudentModuleView extends javax.swing.JFrame {
 
         input_address.setText(model.getValueAt(i,3).toString());
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void input_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_input_idActionPerformed
 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -81,8 +81,18 @@ public class BangDiemModuleView extends javax.swing.JFrame {
         jLabel5.setText("CNPM");
 
         btn_add.setText("Add");
+        btn_add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_addActionPerformed(evt);
+            }
+        });
 
         btn_edit.setText("Edit");
+        btn_edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_editActionPerformed(evt);
+            }
+        });
 
         btn_delete.setText("Delete");
 
@@ -274,6 +284,14 @@ public class BangDiemModuleView extends javax.swing.JFrame {
        WelcomeController wc = new WelcomeController(wv);
        dispose();
     }//GEN-LAST:event_btn_backMouseClicked
+
+    private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_addActionPerformed
+
+    private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_editActionPerformed
     
     public void addBangDiem(ArrayList<BangDiem> bdList,ArrayList<Student> stuList) {
         btn_add.addActionListener((e) -> {

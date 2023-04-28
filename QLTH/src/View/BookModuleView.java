@@ -7,8 +7,10 @@ package View;
 
 import Controller.WelcomeController;
 import Model.Book;
+import Model.Gvms;
 import Model.Student;
 import Model.Svms;
+import Model.Teacher;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
@@ -26,6 +28,7 @@ import javax.swing.table.TableModel;
 public class BookModuleView extends javax.swing.JFrame {
 
     private DefaultTableModel tb1 , tb2 ;
+    private int count = 0 ;
     public BookModuleView() {
         initComponents();
         this.setVisible(true);
@@ -396,6 +399,8 @@ public class BookModuleView extends javax.swing.JFrame {
        }
    }
    
+   
+   // excecute student
    public void executeSQlQuery2(ArrayList<Svms> svmsList,ArrayList<Book> bookList,ArrayList<Student> stuList,String query, String message)
    {
        Connection con = getConnection();
@@ -418,6 +423,31 @@ public class BookModuleView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
        }
    }
+   
+   // excecute teacher
+   public void executeSQlQuery3(ArrayList<Gvms> gvmsList,ArrayList<Book> bookList,ArrayList<Teacher> teaList,String query, String message)
+   {
+       Connection con = getConnection();
+       Statement st;
+       try{
+           st = con.createStatement();
+           
+           // thực thi câu lệnh truy vấn
+           if((st.executeUpdate(query)) == 1)
+           {
+               // refresh jtable data
+               tb2.setRowCount(0);
+               HienThi_GVms(gvmsList,bookList,teaList);
+               
+               JOptionPane.showMessageDialog(null, "Data "+message+" Succefully");
+           }else{
+               JOptionPane.showMessageDialog(null, "Data Not "+message);
+           }
+       }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+       }
+   }
+   
    // Display Data In JTable
    public void HienThi_Sach(ArrayList<Book> bookList)
    {
@@ -433,6 +463,7 @@ public class BookModuleView extends javax.swing.JFrame {
        }
     }
    
+   // hien thi svms 
     public void HienThi_SVms(ArrayList<Svms> svmsList,ArrayList<Book> bookList,ArrayList<Student> stuList)
    {
        tb2 = (DefaultTableModel) jTable2.getModel();
@@ -457,6 +488,32 @@ public class BookModuleView extends javax.swing.JFrame {
        }
     }
     
+    // hien thi gvms
+    public void HienThi_GVms(ArrayList<Gvms> gvmsList,ArrayList<Book> bookList,ArrayList<Teacher> teaList)
+   {
+       tb2 = (DefaultTableModel) jTable2.getModel();
+       Object[] row = new Object[4];
+       for(int i = 0; i < gvmsList.size(); i++)
+       {
+           for(Book bk : bookList) {
+               if(bk.getId().equals(gvmsList.get(i).getMa_sach())) {      
+                 row[0] = bk.getName();
+                 break ;
+           }
+           }
+           for(Teacher tea : teaList) {
+               if(tea.getId().equals(gvmsList.get(i).getMa_gv())) {
+                 row[1] = tea.getName();
+                 break;
+           }
+           }
+           row[2] = gvmsList.get(i).getNgay_muon();
+           row[3] = gvmsList.get(i).getNgay_tra();
+           tb2.addRow(row);
+       }
+    }
+    
+    // thao tac book
     public void addBook(ArrayList<Book> bookList) {
         btn_add.addActionListener((e) -> {
         Book bk = new Book(input_id.getText(), input_name.getText(), input_tac_gia.getText(), Integer.parseInt(input_gia.getText()));
@@ -506,16 +563,27 @@ public class BookModuleView extends javax.swing.JFrame {
         input_tac_gia.setText("");
         input_gia.setText("");
     }
-   public void addSvmsBook(ArrayList<Svms> svmsList,ArrayList<Book> bookList,ArrayList<Student> stuList){
+    
+   // thao tac svms
+   public void addMsBook(ArrayList<Svms> svmsList,ArrayList<Gvms> gvmsList,ArrayList<Student> stuList,ArrayList<Teacher> teaList,ArrayList<Book> bookList){   
        btn_add1.addActionListener((e) -> {
+          if(this.count == 0) {
         Svms svms = new Svms(input_ma.getText(), input_ms.getText(), input_ngay_muon.getText(), input_ngay_tra.getText());
         svmsList.add(svms);
         String query = "INSERT INTO `SV MUON SACH`(`Ma_Sinh_Vien`, `Ma_Sach`, `Ngay_Muon`, `Ngay_Tra` ) VALUES ('"+svms.getMa_sv()+"','"+svms.getMa_sach()+"','"+svms.getNgay_muon()+"','"+svms.getNgay_tra()+"')";
         executeSQlQuery2(svmsList,bookList,stuList,query, "Inserted");
+          }
+          else if (this.count == 1) {
+             Gvms gvms = new Gvms(input_ma.getText(), input_ms.getText(), input_ngay_muon.getText(), input_ngay_tra.getText());
+            gvmsList.add(gvms);
+            String query = "INSERT INTO `GV MUON SACH`(`Ma_Giao_Vien`, `Ma_Sach`, `Ngay_Muon`, `Ngay_Tra` ) VALUES ('"+gvms.getMa_gv()+"','"+gvms.getMa_sach()+"','"+gvms.getNgay_muon()+"','"+gvms.getNgay_tra()+"')";
+            executeSQlQuery3(gvmsList,bookList,teaList,query, "Inserted");
+          }
        });
     }
-    public void editSvmsBook(ArrayList<Svms> svmsList,ArrayList<Book> bookList,ArrayList<Student> stuList){
-       btn_edit1.addActionListener((e) -> {
+    public void editMsBook(ArrayList<Svms> svmsList,ArrayList<Gvms> gvmsList,ArrayList<Student> stuList,ArrayList<Teacher> teaList,ArrayList<Book> bookList){   
+        btn_edit1.addActionListener((e) -> {
+    if(this.count == 0) {
         for(Svms svms : svmsList) {
             if(input_ma.getText().equals(svms.getMa_sv()) && input_ms.getText().equals(svms.getMa_sach())) {
                 if(input_ngay_muon.getText().equals(svms.getNgay_muon()) && input_ngay_tra.getText().equals(svms.getNgay_tra())) {
@@ -531,11 +599,30 @@ public class BookModuleView extends javax.swing.JFrame {
               break;
             }
         }
+            }
+    else if(this.count == 1) {
+        for(Gvms gvms : gvmsList) {
+            if(input_ma.getText().equals(gvms.getMa_gv()) && input_ms.getText().equals(gvms.getMa_sach())) {
+                if(input_ngay_muon.getText().equals(gvms.getNgay_muon()) && input_ngay_tra.getText().equals(gvms.getNgay_tra())) {
+                    this.resetTextMs();
+                    JOptionPane.showMessageDialog(null, "Xin vui lòng nhập dữ liệu mới để hệ thống cập nhật .");
+                    return ;
+                }
+              gvms.setNgay_muon(input_ngay_muon.getText());
+              gvms.setNgay_tra(input_ngay_tra.getText());
+              this.resetTextMs();
+              String query = "UPDATE `GV MUON SACH` SET `Ngay_Muon`='"+gvms.getNgay_muon()+"',`Ngay_Tra`='"+gvms.getNgay_tra()+"' WHERE Ma_Giao_Vien = '"+gvms.getMa_gv()+"' AND Ma_Sach = '"+gvms.getMa_sach()+"'";
+              executeSQlQuery3(gvmsList,bookList,teaList,query, "Updated");
+              break;
+            }
+        }
+      }
        });
     }
     
-    public void deleteSvmsBook(ArrayList<Svms> svmsList,ArrayList<Book> bookList,ArrayList<Student> stuList){
-        btn_delete1.addActionListener((e) -> {
+    public void deleteMsBook(ArrayList<Svms> svmsList,ArrayList<Gvms> gvmsList,ArrayList<Student> stuList,ArrayList<Teacher> teaList,ArrayList<Book> bookList){   
+        btn_delete1.addActionListener((e) -> { 
+    if(this.count == 0) { 
         for(Svms svms : svmsList) {
             if(input_ma.getText().equals(svms.getMa_sv()) && input_ms.getText().equals(svms.getMa_sach())) {
               svmsList.remove(svms);
@@ -545,8 +632,22 @@ public class BookModuleView extends javax.swing.JFrame {
               break;
             }
         } 
-       }); 
     }
+    else  if(this.count == 1) { 
+       for(Gvms gvms : gvmsList) {
+            if(input_ma.getText().equals(gvms.getMa_gv()) && input_ms.getText().equals(gvms.getMa_sach())) {
+              gvmsList.remove(gvms);
+              this.resetTextMs();
+              String query = "DELETE FROM `GV MUON SACH` WHERE Ma_Sach = '"+gvms.getMa_sach()+"' AND Ma_Giao_Vien = '"+gvms.getMa_gv()+"'"; 
+              executeSQlQuery3(gvmsList,bookList,teaList,query,  "Deleted"); 
+              break;
+            }
+        } 
+    } 
+   });
+ }
+    
+    
     private void btn_backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_backMouseClicked
         // TODO add your handling code here:
        WelcomeView wv = new WelcomeView();
@@ -571,15 +672,23 @@ public class BookModuleView extends javax.swing.JFrame {
         input_gia.setText(model.getValueAt(i,3).toString());
     }//GEN-LAST:event_jTable1MouseClicked
     
-
-    public void doi_bangms(ArrayList<Svms> svmsList,ArrayList<Book> bookList,ArrayList<Student> stuList){
+    
+    public void doi_bangms(ArrayList<Svms> svmsList,ArrayList<Gvms> gvmsList,ArrayList<Student> stuList,ArrayList<Teacher> teaList,ArrayList<Book> bookList){
       jComboBox1.addActionListener((e) -> {
         int index = jComboBox1.getSelectedIndex();
          if(index == 1) {
-          tb2.setRowCount(0);
+           this.count = 1;
+          // reset text
           this.resetTextMs();
+          // hien thi gvms
+          tb2.setRowCount(0);
+          this.HienThi_GVms(gvmsList, bookList, teaList); 
         } 
         else if(index == 0){
+           this.count = 0 ;
+          // reset text
+          this.resetTextMs();
+          // hien thi svms
           tb2.setRowCount(0);
           this.HienThi_SVms(svmsList, bookList, stuList);
         }
@@ -592,20 +701,22 @@ public class BookModuleView extends javax.swing.JFrame {
        input_ngay_muon.setText("");
        input_ngay_tra.setText("");
     }   
-    public void chonHang(ArrayList<Svms> svmsList) {
+   
+    
+    public void chonHangMs(ArrayList<Svms> svmsList,ArrayList<Gvms> gvmsList) {
          jTable2.addMouseListener(new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent e) {
             // TODO add your handling code here:
+         if(count == 1) {
           try {
         int i = jTable2.getSelectedRow();
         TableModel model = jTable2.getModel();
         
-      
-        String ma= svmsList.get(i).getMa_sv();
+        String ma= gvmsList.get(i).getMa_gv();
         input_ma.setText(ma);
 
-        String ms = svmsList.get(i).getMa_sach();
+        String ms = gvmsList.get(i).getMa_sach();
         input_ms.setText(ms);
 
         input_ngay_muon.setText(model.getValueAt(i,2).toString());
@@ -616,6 +727,28 @@ public class BookModuleView extends javax.swing.JFrame {
         catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex);
        }
+        }
+        else if (count == 0) {
+           try {
+        int j = jTable2.getSelectedRow();
+        TableModel model = jTable2.getModel();
+        
+      
+        String ma= svmsList.get(j).getMa_sv();
+        input_ma.setText(ma);
+
+        String ms = svmsList.get(j).getMa_sach();
+        input_ms.setText(ms);
+
+        input_ngay_muon.setText(model.getValueAt(j,2).toString());
+        
+        input_ngay_tra.setText(model.getValueAt(j,3).toString()); 
+        
+        }
+        catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex);
+       }  
+         }
         }
        });
     }
