@@ -25,11 +25,12 @@ CREATE TABLE `SACH` (
   PRIMARY KEY (`Ma_Sach`)
 );
 
+DROP TABLE `SV MUON SACH` ;
 CREATE TABLE `SV MUON SACH` (
    `Ma_Sinh_Vien` varchar(20),
    `Ma_Sach` varchar(20),
-   `Ngay_Muon` datetime,
-   `Ngay_Tra` dateTime,
+   `Ngay_Muon` varchar(20),
+   `Ngay_Tra` varchar(20),
     CONSTRAINT `FK_SV MUON SACH.Ma_Sinh_Vien`
     FOREIGN KEY (`Ma_Sinh_Vien`)
       REFERENCES `SINH VIEN`(`Ma_Sinh_Vien`),
@@ -37,11 +38,13 @@ CREATE TABLE `SV MUON SACH` (
     FOREIGN KEY (`Ma_Sach`)
       REFERENCES `SACH`(`Ma_Sach`)
 );
+
+drop table `GV MUON SACH` ;
 CREATE TABLE `GV MUON SACH` (
    `Ma_Giao_Vien` varchar(20),
    `Ma_Sach` varchar(20),
-   `Ngay_Muon` datetime,
-   `Ngay_Tra` dateTime,
+   `Ngay_Muon` varchar(20),
+   `Ngay_Tra` varchar(20),
     CONSTRAINT `FK_GV MUON SACH.Ma_Giao_Vien`
     FOREIGN KEY (`Ma_Giao_Vien`)
       REFERENCES `GIAO VIEN`(`Ma_Giao_Vien`),
