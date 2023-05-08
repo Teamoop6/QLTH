@@ -28,6 +28,7 @@ public class BookModuleController {
         this.bk = bk;
         this.bmv = bmv ;
         this.layVaHienThiDuLieu();
+        this.thaoTacBook();
         this.thaoTacMsBook();
     }
     

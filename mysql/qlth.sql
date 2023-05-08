@@ -4,7 +4,7 @@ USE qlth;
 CREATE TABLE `SINH VIEN` (
   `Ma_Sinh_Vien` varchar(20),
   `Ten` varchar(20),
-  `So_ Dien_Thoai` varchar(20),
+  `So_Dien_Thoai` varchar(20),
   `Dia_Chi` varchar(20),
   PRIMARY KEY (`Ma_Sinh_Vien`)
 );
@@ -12,7 +12,7 @@ CREATE TABLE `SINH VIEN` (
 CREATE TABLE `GIAO VIEN` (
   `Ma_Giao_Vien` varchar(20),
   `Ten` varchar(20),
-  `So_ Dien_Thoai` varchar(20),
+  `So_Dien_Thoai` varchar(20),
   `Dia_Chi` varchar(20),
   PRIMARY KEY (`Ma_Giao_Vien`)
 );
@@ -56,6 +56,7 @@ CREATE TABLE `BANG DIEM` (
   `CNPM` decimal(3,2),
   `C++` decimal(3,2),
   `KTVXL` decimal(3,2),
+  `DTB` decimal(3,2),
   PRIMARY KEY (`Id`),
   CONSTRAINT `FK_BANG DIEM.Ma_Sinh_Vien`
     FOREIGN KEY (`Ma_Sinh_Vien`)
